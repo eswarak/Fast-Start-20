@@ -1,77 +1,77 @@
 # Lab Introduction
 
-<!-- TOC -->
+<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Lab Introduction](#lab-introduction)
-    - [Introduction to CloudForms](#introduction-to-cloudforms)
-        - [Access the lab environment](#access-the-lab-environment)
-    - [Verify Lab](#verify-lab)
-        - [OpenStack Provider status](#openstack-provider-status)
-        - [Red Hat Virtualization Provider status](#red-hat-virtualization-provider-status)
-        - [vCenter Provider status](#vcenter-provider-status)
-    - [Build a Service Catalog with CloudForms](#build-a-service-catalog-with-cloudforms)
-        - [What's the value of having a service catalog?](#whats-the-value-of-having-a-service-catalog)
-        - [Service Basics](#service-basics)
-        - [Virtual Machine Provisioning example](#virtual-machine-provisioning-example)
-        - [Build a VM Provisioning Service Dialog](#build-a-vm-provisioning-service-dialog)
-        - [Build a VM Provisioning Service Catalog](#build-a-vm-provisioning-service-catalog)
-        - [Build a Virtual Machine Service Catalog Item](#build-a-virtual-machine-service-catalog-item)
-        - [Order the Simple Virtual Machine Service Catalog Item](#order-the-simple-virtual-machine-service-catalog-item)
-        - [Verify the order](#verify-the-order)
-        - [HEAT Provisioning example](#heat-provisioning-example)
-        - [Prepare the HEAT Template](#prepare-the-heat-template)
-        - [Import the HEAT Template](#import-the-heat-template)
-        - [Create a Service Dialog from a HEAT template](#create-a-service-dialog-from-a-heat-template)
-        - [Verify the Service Dialog](#verify-the-service-dialog)
-        - [Build a HEAT Service Catalog](#build-a-heat-service-catalog)
-        - [Build a HEAT Service Catalog Item](#build-a-heat-service-catalog-item)
-        - [Order the HEAT Wordpress Catalog Item](#order-the-heat-wordpress-catalog-item)
-        - [Verify provisioning in OpenStack](#verify-provisioning-in-openstack)
-    - [CloudForms 4.5 with Ansible batteries included](#cloudforms-45-with-ansible-batteries-included)
-        - [Introduction to Ansible](#introduction-to-ansible)
-        - [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
-        - [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
-        - [Add vCenter credentials](#add-vcenter-credentials)
-        - [Verify repository sync](#verify-repository-sync)
-        - [Install pysphere](#install-pysphere)
-        - [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
-        - [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
-        - [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
-        - [Order the "create user" Service Catalog Item](#order-the-create-user-service-catalog-item)
-        - [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
-        - [Verify Playbook results](#verify-playbook-results)
-        - [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
-        - [Order the Virtual Machine Provisioning Service Catalog Item](#order-the-virtual-machine-provisioning-service-catalog-item)
-        - [Monitor VM provisioning Playbook execution](#monitor-vm-provisioning-playbook-execution)
-        - [Extend CloudForms builtin Capabilities](#extend-cloudforms-builtin-capabilities)
-        - [Add a Git repository for Automate](#add-a-git-repository-for-automate)
-        - [Verify Automate import](#verify-automate-import)
-        - [Optimize the Dialog](#optimize-the-dialog)
-        - [Update the Service Catalog Item](#update-the-service-catalog-item)
-        - [Test the new Service Dialog](#test-the-new-service-dialog)
-    - [Policies and Ansible](#policies-and-ansible)
-        - [Creating the Service](#creating-the-service)
-        - [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook-1)
-        - [Creating Control Action](#creating-control-action)
-        - [Create VM Control Policy](#create-vm-control-policy)
-        - [Setting Event Assignment](#setting-event-assignment)
-        - [Setting Control Action on Event](#setting-control-action-on-event)
-        - [Creating and Assigning Policy Profile](#creating-and-assigning-policy-profile)
-        - [Assign the policy profile](#assign-the-policy-profile)
-        - [Testing the Policy Profile](#testing-the-policy-profile)
-    - [Advanced labs](#advanced-labs)
-        - [Use the Self Service user Interface](#use-the-self-service-user-interface)
-        - [Use role Based Access Control to publish Service Catalog](#use-role-based-access-control-to-publish-service-catalog)
-        - [User Groups](#user-groups)
-        - [Roles](#roles)
-        - [More details](#more-details)
-        - [Create a Role](#create-a-role)
-        - [Create a new Group](#create-a-new-group)
-        - [Create a new User](#create-a-new-user)
-        - [Test user Joe Doe](#test-user-joe-doe)
-        - [Grant access to certain Catalog Items](#grant-access-to-certain-catalog-items)
-        - [Test once more as Joe Doe](#test-once-more-as-joe-doe)
-    - [Even more?](#even-more)
+	- [Introduction to CloudForms](#introduction-to-cloudforms)
+		- [Access the lab environment](#access-the-lab-environment)
+	- [Verify Lab](#verify-lab)
+		- [OpenStack Provider status](#openstack-provider-status)
+		- [Red Hat Virtualization Provider status](#red-hat-virtualization-provider-status)
+		- [vCenter Provider status](#vcenter-provider-status)
+	- [Build a Service Catalog with CloudForms](#build-a-service-catalog-with-cloudforms)
+		- [What's the value of having a service catalog?](#whats-the-value-of-having-a-service-catalog)
+		- [Service Basics](#service-basics)
+		- [Virtual Machine Provisioning example](#virtual-machine-provisioning-example)
+		- [Build a VM Provisioning Service Dialog](#build-a-vm-provisioning-service-dialog)
+		- [Build a VM Provisioning Service Catalog](#build-a-vm-provisioning-service-catalog)
+		- [Build a Virtual Machine Service Catalog Item](#build-a-virtual-machine-service-catalog-item)
+		- [Order the Simple Virtual Machine Service Catalog Item](#order-the-simple-virtual-machine-service-catalog-item)
+		- [Verify the order](#verify-the-order)
+		- [HEAT Provisioning example](#heat-provisioning-example)
+		- [Prepare the HEAT Template](#prepare-the-heat-template)
+		- [Import the HEAT Template](#import-the-heat-template)
+		- [Create a Service Dialog from a HEAT template](#create-a-service-dialog-from-a-heat-template)
+		- [Verify the Service Dialog](#verify-the-service-dialog)
+		- [Build a HEAT Service Catalog](#build-a-heat-service-catalog)
+		- [Build a HEAT Service Catalog Item](#build-a-heat-service-catalog-item)
+		- [Order the HEAT Wordpress Catalog Item](#order-the-heat-wordpress-catalog-item)
+		- [Verify provisioning in OpenStack](#verify-provisioning-in-openstack)
+	- [CloudForms 4.5 with Ansible batteries included](#cloudforms-45-with-ansible-batteries-included)
+		- [Introduction to Ansible](#introduction-to-ansible)
+		- [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
+		- [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
+		- [Add vCenter credentials](#add-vcenter-credentials)
+		- [Verify repository sync](#verify-repository-sync)
+		- [Install pysphere](#install-pysphere)
+		- [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
+		- [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
+		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
+		- [Order the "create user" Service Catalog Item](#order-the-create-user-service-catalog-item)
+		- [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
+		- [Verify Playbook results](#verify-playbook-results)
+		- [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
+		- [Order the Virtual Machine Provisioning Service Catalog Item](#order-the-virtual-machine-provisioning-service-catalog-item)
+		- [Monitor VM provisioning Playbook execution](#monitor-vm-provisioning-playbook-execution)
+		- [Extend CloudForms builtin Capabilities](#extend-cloudforms-builtin-capabilities)
+		- [Add a Git repository for Automate](#add-a-git-repository-for-automate)
+		- [Verify Automate import](#verify-automate-import)
+		- [Optimize the Dialog](#optimize-the-dialog)
+		- [Update the Service Catalog Item](#update-the-service-catalog-item)
+		- [Test the new Service Dialog](#test-the-new-service-dialog)
+	- [Policies and Ansible](#policies-and-ansible)
+		- [Creating the Service](#creating-the-service)
+		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
+		- [Creating Control Action](#creating-control-action)
+		- [Create VM Control Policy](#create-vm-control-policy)
+		- [Setting Event Assignment](#setting-event-assignment)
+		- [Setting Control Action on Event](#setting-control-action-on-event)
+		- [Creating and Assigning Policy Profile](#creating-and-assigning-policy-profile)
+		- [Assign the policy profile](#assign-the-policy-profile)
+		- [Testing the Policy Profile](#testing-the-policy-profile)
+	- [Advanced labs](#advanced-labs)
+		- [Use the Self Service user Interface](#use-the-self-service-user-interface)
+		- [Use role Based Access Control to publish Service Catalog](#use-role-based-access-control-to-publish-service-catalog)
+		- [User Groups](#user-groups)
+		- [Roles](#roles)
+		- [More details](#more-details)
+		- [Create a Role](#create-a-role)
+		- [Create a new Group](#create-a-new-group)
+		- [Create a new User](#create-a-new-user)
+		- [Test user Joe Doe](#test-user-joe-doe)
+		- [Grant access to certain Catalog Items](#grant-access-to-certain-catalog-items)
+		- [Test once more as Joe Doe](#test-once-more-as-joe-doe)
+	- [Even more?](#even-more)
 
 <!-- /TOC -->
 
@@ -89,15 +89,15 @@ If you've never used RHPDS before, make sure you follow the [Lab Environment Acc
 
 After you logged in, navigate to ***Services*** -> ***Catalogs***. Open the "EMEA RHTE" Catalog.
 
-![EMEA RHTE Catalog](img/emea-rhte-catalog.png) 
+![EMEA RHTE Catalog](img/emea-rhte-catalog.png)
 
-Click on the "EMEA RHTE CF Lab" and click on ***Order*** to start deployment. 
+Click on the "EMEA RHTE CF Lab" and click on ***Order*** to start deployment.
 
 ![Order CF Lab](img/order-rhte-lab.png)
 
 ***Note:*** Give the lab up to 15 minutes to complete provisioning!
 
-You will receive an email with the list of all virtual machines which have been deployed as part of the lab. 
+You will receive an email with the list of all virtual machines which have been deployed as part of the lab.
 
 The lab is comprised of a number of systems:
 
@@ -304,7 +304,7 @@ Follow these steps to design the service dialog:
     ***Description:*** Specify the name of the new virtual machine
 
     CloudForms allows us to design Service Dialogs comprised of many different types of Elements:
-    
+
     - Check box: allows to user to check or uncheck the element, often used to ask for additional optional data
     - Date Control: allows the user to select a date from a calender widget. Often used for retirement or other date related options
     - Date/Time Control: same as Date Control, but also allows to specify a time, for example used to specify an automated shutdown or if a change should be scheduled for later
@@ -313,7 +313,7 @@ Follow these steps to design the service dialog:
     - Tag Control: a special element which allows the user to chose from available tags. More about tagging later in this lab
     - Text Area Box: allows the user to enter relatively large amounts of text (multiple lines), could be used for example to provide description information
     - Text Box: allows the user for short amounts of text (one line), in this example we use this element to ask the user for a name of the virtual machine
-    
+
     We want the user to enter a text which then will be used to name the VM. This can be accomplished by selecting "Text Box" in the ***Type*** drop down list.
 
     ![add a new element to ask for the VM name](img/element-vmname.png)
@@ -1448,7 +1448,7 @@ We want to see how the resulting Service Catalog Item looks like.
 
 ## Policies and Ansible
 
-In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. 
+In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook.
 
 ### Creating the Service
 
@@ -1635,11 +1635,11 @@ For a policy to work, it needs a policy profile to be attached to. The policy pr
 
 ### Testing the Policy Profile
 
-We will see the output in CloudForms in the form of a service in my services as well as the actual VM inventory will change. To see more real time, it's advised during testing to open the policy.log file on the CloudForms appliance. This shows when events are caught by CloudForms and confirms the policy matches. 
+We will see the output in CloudForms in the form of a service in my services as well as the actual VM inventory will change. To see more real time, it's advised during testing to open the policy.log file on the CloudForms appliance. This shows when events are caught by CloudForms and confirms the policy matches.
 
 Start by going to vSphere Web Client and selecting the VM that you identified for your service and policy earlier.
 
-1. Go to the vCenter console, pick the VM you assigned the Policy and modify the CPU and Memory values to 
+1. Go to the vCenter console, pick the VM you assigned the Policy and modify the CPU and Memory values to
 
     ***CPU:*** 3
 
