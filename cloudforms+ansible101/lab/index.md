@@ -113,25 +113,95 @@ The lab is comprised of a number of systems:
 
         User: admin@internal / password: r3dh4t1!
 
-- Red Hat OpenStack Platform
-
-        URL: https://osp-<GUID>.rhpds.opentlc.com
-
-        User: admin / password: r3dh4t1!
-
-    ***Note:*** IF you don't use HTTPS when connecting to OpenStack Horizon, you will only see the Default Apache Welcome Page (no automatic redirect). Make sure you use HTTPS to access Horizon.
-
 - VMware vCenter
 
         URL: https://vcenter-<GUID>.rhpds.opentlc.com
 
-        User: root / password: r3dh4t1!
+        User: administrator@vphere.local / password: r3dh4t1!
 
 The ID &lt;GUID&gt; is unique to your lab environment.
 
 ***Note:*** Your browser might give you a warning message about the used SSL Certificates. These warning messages can be accepted and are due to the fact that each lab deployed with new certificates on request.
 
-## Verify Lab
+## Lab1: Setting up the environment
+
+### Environment architecture
+As we explained before, your lab is built out of
+
+* CloudForms 5.0 appliance
+
+* RHV
+
+* VMware
+
+* Ansible Tower
+
+***Note:*** This architecture is only for labs and POCs, and should never make it into any production-like environment, as it has one single appliance that will perform all the operations
+
+
+![](img/lab-architecture.png)
+
+### Set up CloudForms
+
+1. The first step is to initialize CloudForms. You need to ssh into the CloudForms appliance
+
+`ssh root@cf-<GUID>.rhpds.opentlc.com`
+
+2. Then you need to access to the launch the `appliance_console`command that will bring you to the summary page of the appliance
+
+	Welcome to the CFME Virtual Appliance.
+	
+	To modify the configuration, use a web browser to access the management page.
+	
+	Hostname:                cf.example.com
+	IPv4 Address:            192.168.0.3/255.255.255.0
+	IPv4 Gateway:            192.168.0.2
+	IPv6 Address:
+	IPV6 Gateway:
+	Primary DNS:             192.168.0.1
+	Secondary DNS:
+	Search Order:            localdomain example.com
+	MAC Address:             2c:c2:60:72:98:35
+	Timezone:                America/New_York
+	Local Database Server:   not initialized
+	CFME Server:             not running
+	CFME Database:           not configured
+	Database/Region:         not configured
+	External Auth:           not configured
+	CFME Version:            5.11.1.2
+	
+	
+	Press any key to continue.
+
+After pressing any key, you will access to the main menu
+
+	Advanced Setting
+	
+	1) Configure Network
+	2) Set Timezone
+	3) Set Date and Time
+	4) Create Database Backup
+	5) Create Database Dump
+	6) Restore Database From Backup
+	7) Configure Database
+	8) Configure Database Replication
+	9) Logfile Configuration
+	10) Configure Application Database Failover Monitor
+	11) Extend Temporary Storage
+	12) Configure External Authentication (httpd)
+	13) Update External Authentication Options
+	14) Generate Custom Encryption Key
+	15) Harden Appliance Using SCAP Configuration
+	16) Stop EVM Server Processes
+	17) Start EVM Server Processes
+	18) Restart Appliance
+	19) Shut Down Appliance
+	20) Summary Information
+	21) Quit
+	
+	Choose the advanced setting:
+
+Select 
 
 ### OpenStack Provider status
 
