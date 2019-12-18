@@ -149,59 +149,69 @@ As we explained before, your lab is built out of
 
 2. Then you need to access to the launch the `appliance_console`command that will bring you to the summary page of the appliance
 
-	Welcome to the CFME Virtual Appliance.
-	
-	To modify the configuration, use a web browser to access the management page.
-	
-	Hostname:                cf.example.com
-	IPv4 Address:            192.168.0.3/255.255.255.0
-	IPv4 Gateway:            192.168.0.2
-	IPv6 Address:
-	IPV6 Gateway:
-	Primary DNS:             192.168.0.1
-	Secondary DNS:
-	Search Order:            localdomain example.com
-	MAC Address:             2c:c2:60:72:98:35
-	Timezone:                America/New_York
-	Local Database Server:   not initialized
-	CFME Server:             not running
-	CFME Database:           not configured
-	Database/Region:         not configured
-	External Auth:           not configured
-	CFME Version:            5.11.1.2
-	
-	
-	Press any key to continue.
 
-After pressing any key, you will access to the main menu
+		Welcome to the CFME Virtual Appliance.
+		
+		To modify the configuration, use a web browser to access the management page.
+		
+		Hostname:                cf.example.com
+		IPv4 Address:            192.168.0.3/255.255.255.0
+		IPv4 Gateway:            192.168.0.2
+		IPv6 Address:
+		IPV6 Gateway:
+		Primary DNS:             192.168.0.1
+		Secondary DNS:
+		Search Order:            localdomain example.com
+		MAC Address:             2c:c2:60:72:98:35
+		Timezone:                America/New_York
+		Local Database Server:   not initialized
+		CFME Server:             not running
+		CFME Database:           not configured
+		Database/Region:         not configured
+		External Auth:           not configured
+		CFME Version:            5.11.1.2
+		
+		
+		Press any key to continue.
 
-	Advanced Setting
-	
-	1) Configure Network
-	2) Set Timezone
-	3) Set Date and Time
-	4) Create Database Backup
-	5) Create Database Dump
-	6) Restore Database From Backup
-	7) Configure Database
-	8) Configure Database Replication
-	9) Logfile Configuration
-	10) Configure Application Database Failover Monitor
-	11) Extend Temporary Storage
-	12) Configure External Authentication (httpd)
-	13) Update External Authentication Options
-	14) Generate Custom Encryption Key
-	15) Harden Appliance Using SCAP Configuration
-	16) Stop EVM Server Processes
-	17) Start EVM Server Processes
-	18) Restart Appliance
-	19) Shut Down Appliance
-	20) Summary Information
-	21) Quit
-	
-	Choose the advanced setting:
+3. After pressing any key, you will access to the main menu
 
-Select 
+
+		Advanced Setting
+		
+		1) Configure Network
+		2) Set Timezone
+		3) Set Date and Time
+		4) Create Database Backup
+		5) Create Database Dump
+		6) Restore Database From Backup
+		7) Configure Database
+		8) Configure Database Replication
+		9) Logfile Configuration
+		10) Configure Application Database Failover Monitor
+		11) Extend Temporary Storage
+		12) Configure External Authentication (httpd)
+		13) Update External Authentication Options
+		14) Generate Custom Encryption Key
+		15) Harden Appliance Using SCAP Configuration
+		16) Stop EVM Server Processes
+		17) Start EVM Server Processes
+		18) Restart Appliance
+		19) Shut Down Appliance
+		20) Summary Information
+		21) Quit
+		
+		Choose the advanced setting:
+
+4. Select option `7) Configure Database`
+5. Select option `1) Create key`
+6. Select option `1) Create Internal Database` ***Note:*** For CloudForms 5.0 it is strongly recommended to create a stand alone Database
+7. Select option `2) /dev/vdb: 51200 MB`
+8. Select No to the question `Should this appliance run as a standalone database server?`***Note:*** For CloudForms 5.0 it is strongly recommended to create a stand alone Database
+9. Provide region number `0`
+10. Provide `smartvm`as the password for the database and verify it
+
+
 
 ### OpenStack Provider status
 
