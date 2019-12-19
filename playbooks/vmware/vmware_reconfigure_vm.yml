@@ -1,16 +1,36 @@
 ---
 - hosts: all
 
-
+  vars:
+   vcenter_hostname: "192.168.0.50"
+   vcenter_username: "administrator@vsphere.local"
+   vcenter_password: "Redhat1!"
+   guest_name: "cfme058"
+   memory: "1024"
+   cpu: "1"
 
   tasks:
-    - name: "Reconfigure {{ guest_name }} "
-      vsphere_guest:
-        validate_certs: False      
-        vcenter_hostname: "{{ vcenter_server }}"
-        guest: "{{ guest_name }}"
-        state: reconfigured
-        vm_hardware:
-            num_cpus: 1
-            memory_mb: 1024
-      delegate_to: localhost
+  - name: Stop virtual machine
+    vmware_guest:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: "false"
+      name: "{{ guest_name }}"
+      state: "poweredoff"
+    delegate_to: "localhost"
+    register: stop_vm
+
+
+
+  - name: reconfigure CPU and RAM of VM
+    vmware_guest:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      name: "{{ guest_name }}"
+      validate_certs: "false"
+      hardware:
+        memory_mb: 1024
+        num_cpus: 1
+    delegate_to: "localhost"
