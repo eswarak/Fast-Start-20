@@ -29,7 +29,6 @@
       username: "{{ vcenter_username }}"
       password: "{{ vcenter_password }}"
       name: "{{ guest_name }}"
-      state: "poweredon"
       validate_certs: "false"
       hardware:
         memory_mb: 1024
