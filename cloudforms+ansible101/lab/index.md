@@ -870,7 +870,7 @@ We want to see how the resulting Service Catalog Item looks like.
 
 ## Policies and Ansible
 
-In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook.
+In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. This is not meant to be a real world example, but instead, a way to demonstrate the power of Ansible in combination with the 
 
 ### Creating the Service
 
