@@ -4,7 +4,7 @@
   connection: local
 
   vars:
-    provider_id: "99000000000014"
+    provider_id: "00000000000002"
     max_retries: 9
     retry_interval: 20
 
@@ -26,7 +26,7 @@
       set_fact:
         svc_url: "/api/{{ manageiq.service }}"
 
-    - debug: var=svc_url 
+    - debug: var=svc_url
 
     - name: Create Virtual Machines
       vsphere_guest:
@@ -48,7 +48,7 @@
         vmware_guest_facts: yes
       register: new_vm
 
-    - debug: var=new_vm    
+    - debug: var=new_vm
 
     - set_fact: new_vm_uuid="{{ new_vm.ansible_facts.hw_product_uuid }}"
 
@@ -64,7 +64,7 @@
         validate_certs: False
         headers:
           X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json" 
+          Content-Type: "application/json"
         status_code: 200
       register: output
     - debug: var=output
@@ -80,7 +80,7 @@
         validate_certs: False
         headers:
           X-Auth-Token: "{{ manageiq.api_token }}"
-          Content-Type: "application/json" 
+          Content-Type: "application/json"
         status_code: 200
       register: task_result
       until: task_result.json.state == 'Finished' or task_result.json.status == 'Error'
@@ -88,7 +88,7 @@
       retries: "{{max_retries}}"
       delay: "{{retry_interval}}"
     - debug: var=task_result
-    
+
     - set_fact: find_vm_url="{{ manageiq.api_url }}/api/vms?expand=resources&attributes=href,uid_ems&filter[]=uid_ems='{{ new_vm_uuid }}'"
 
     - debug: var=find_vm_url
@@ -118,7 +118,7 @@
         - "{{ cf_vm_href }}"
 
     - debug: var=vms
-    
+
     - name: Register vm with the service
       uri:
         url: "{{ manageiq.api_url }}/api/services"
@@ -135,4 +135,3 @@
       register: output
 
     - debug: var=output.json.results[0].success
-

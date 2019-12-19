@@ -5,29 +5,12 @@
 - [Lab Introduction](#lab-introduction)
 	- [Introduction to CloudForms](#introduction-to-cloudforms)
 		- [Access the lab environment](#access-the-lab-environment)
-	- [Verify Lab](#verify-lab)
-		- [OpenStack Provider status](#openstack-provider-status)
-		- [Red Hat Virtualization Provider status](#red-hat-virtualization-provider-status)
-		- [vCenter Provider status](#vcenter-provider-status)
-	- [Build a Service Catalog with CloudForms](#build-a-service-catalog-with-cloudforms)
-		- [What's the value of having a service catalog?](#whats-the-value-of-having-a-service-catalog)
-		- [Service Basics](#service-basics)
-		- [Virtual Machine Provisioning example](#virtual-machine-provisioning-example)
-		- [Build a VM Provisioning Service Dialog](#build-a-vm-provisioning-service-dialog)
-		- [Build a VM Provisioning Service Catalog](#build-a-vm-provisioning-service-catalog)
-		- [Build a Virtual Machine Service Catalog Item](#build-a-virtual-machine-service-catalog-item)
-		- [Order the Simple Virtual Machine Service Catalog Item](#order-the-simple-virtual-machine-service-catalog-item)
-		- [Verify the order](#verify-the-order)
-		- [HEAT Provisioning example](#heat-provisioning-example)
-		- [Prepare the HEAT Template](#prepare-the-heat-template)
-		- [Import the HEAT Template](#import-the-heat-template)
-		- [Create a Service Dialog from a HEAT template](#create-a-service-dialog-from-a-heat-template)
-		- [Verify the Service Dialog](#verify-the-service-dialog)
-		- [Build a HEAT Service Catalog](#build-a-heat-service-catalog)
-		- [Build a HEAT Service Catalog Item](#build-a-heat-service-catalog-item)
-		- [Order the HEAT Wordpress Catalog Item](#order-the-heat-wordpress-catalog-item)
-		- [Verify provisioning in OpenStack](#verify-provisioning-in-openstack)
-	- [CloudForms 4.5 with Ansible batteries included](#cloudforms-45-with-ansible-batteries-included)
+	- [Lab1: Setting up the environment](#lab1-setting-up-the-environment)
+		- [Environment architecture](#environment-architecture)
+		- [Set up CloudForms](#set-up-cloudforms)
+		- [Add the VMware Provider](#add-the-vmware-provider)
+		- [Add Red Hat Virtualization Provider](#add-red-hat-virtualization-provider)
+	- [CloudForms with Ansible batteries included](#cloudforms-with-ansible-batteries-included)
 		- [Introduction to Ansible](#introduction-to-ansible)
 		- [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
 		- [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
@@ -51,7 +34,7 @@
 		- [Test the new Service Dialog](#test-the-new-service-dialog)
 	- [Policies and Ansible](#policies-and-ansible)
 		- [Creating the Service](#creating-the-service)
-		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
+		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook-1)
 		- [Creating Control Action](#creating-control-action)
 		- [Create VM Control Policy](#create-vm-control-policy)
 		- [Setting Event Assignment](#setting-event-assignment)
@@ -151,9 +134,9 @@ As we explained before, your lab is built out of
 
 
 		Welcome to the CFME Virtual Appliance.
-		
+
 		To modify the configuration, use a web browser to access the management page.
-		
+
 		Hostname:                cf.example.com
 		IPv4 Address:            192.168.0.3/255.255.255.0
 		IPv4 Gateway:            192.168.0.2
@@ -170,15 +153,15 @@ As we explained before, your lab is built out of
 		Database/Region:         not configured
 		External Auth:           not configured
 		CFME Version:            5.11.1.2
-		
-		
+
+
 		Press any key to continue.
 
 3. After pressing any key, you will access to the main menu
 
 
 		Advanced Setting
-		
+
 		1) Configure Network
 		2) Set Timezone
 		3) Set Date and Time
@@ -200,7 +183,7 @@ As we explained before, your lab is built out of
 		19) Shut Down Appliance
 		20) Summary Information
 		21) Quit
-		
+
 		Choose the advanced setting:
 
 4. Select option `7) Configure Database`
@@ -210,14 +193,14 @@ As we explained before, your lab is built out of
 8. Select No to the question `Should this appliance run as a standalone database server?` ***Note:*** For CloudForms 5.0 it is strongly recommended to create a standalone Database.
 9. Provide region number `0`.
 10. Provide `smartvm`as the password for the database and verify it.
-11. Wait few minutes until the configuration finishes. 
+11. Wait few minutes until the configuration finishes.
 12. Press any key to continue.
 13. This will take you back to the summary screen. Please, note that now the CFME server is running
 
 		Welcome to the CFME Virtual Appliance.
-		
+
 		To modify the configuration, use a web browser to access the management page.
-		
+
 		Hostname:                cf.example.com
 		IPv4 Address:            192.168.0.3/255.255.255.0
 		IPv4 Gateway:            192.168.0.2
@@ -234,8 +217,8 @@ As we explained before, your lab is built out of
 		Database/Region:         vmdb_production / 0
 		External Auth:           not configured
 		CFME Version:            5.11.1.2
-		
-		
+
+
 		Press any key to continue.
 
 14. Press `21) Quit` to quit the console and exit the terminal
@@ -273,7 +256,7 @@ Let's add the vCenter Provider:
 
 5. Refresh the browser and you will get the updated info of the provider
 
-### Add Red Hat Virtualization Provider
+<!--### Add Red Hat Virtualization Provider
 
 Let's add the RHV Provider:
 
@@ -292,15 +275,15 @@ Let's add the RHV Provider:
 
 **Zone**: Default
 
-**Hostname**: 
+**Hostname**:
 
-**Username**: 
+**Username**:
 
-**Password**: 
+**Password**:
 
 3. Click on `Validate`
 4. Once the validation is successful, click on `Add`
-
+-->
 
 1. Now you're ready to go!
 
@@ -354,7 +337,7 @@ To be able to run Ansible Playbooks, they have to become available in CloudForms
 
     ***SCM Update Options:*** check "Update on Launch"
 
-    ![add a new repository](img/add-ansible-repository.png) 
+    ![add a new repository](img/add-ansible-repository.png)
 
 1. Click on ***Add*** to save the settings
 
@@ -386,7 +369,7 @@ For one of the following labs, the Playbook needs to be able to log into the vCe
 
 1. Click ***Add*** to save the credentials
 
-***Note:*** It takes a few seconds for the action to complete. 
+***Note:*** It takes a few seconds for the action to complete.
 
 ### Verify repository sync
 
@@ -438,13 +421,11 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     ![navigate to service catalog items](img/add-catalog-item.png)
 
-1. Click on ***Configuration*** -> ***Add a New Catalog Item***
+1. Click on ***Configuration*** -> ***Add a New Catalog Item*** 
 
 1. Select ***Ansible Playbook*** as "Catalog Item Type"
 
     ![add catalog item ansible Playbook](img/add-catalog-item-ansible-playbook.png)
-
-    ***Note:*** Do not select Ansible Tower! We do not use Ansible Tower in this lab, but the embedded Ansible role of CloudForms.
 
 1. Fill out the form to define the service catalog item:
 
@@ -452,7 +433,9 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     ***Description:*** Order this catalog item to create a new user
 
-    ***Display in Catalog:*** Yes (check the box)
+    ***Display in Catalog:*** Yes (slide the button)
+    
+    ***Long description:*** Leave it blank
 
     ***Catalog:*** Ansible
 
@@ -492,7 +475,7 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     There are no variables needed for retirement and the ***Variables & Default Values*** can be left empty.
 
-    ![create user service dialog retirement](img/create-new-user-retire.png)
+    ![create user service dialog retirement](img/create-new-user-retire.png) 
 
 1. Click on ***Add*** to save the catalog item
 
@@ -514,7 +497,7 @@ To make sure everything works as expected, we want to test the Catalog Item we j
 
 1. The default values in the form can be left alone. Optionally you can specify a different user name and password
 
-    ![create user order form](img/create-user-order-form.png)
+    ![create user order form](img/create-user-order-form.png) 
 
 1. Click ***Submit***
 
@@ -528,7 +511,7 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
 
 1. Navigate to ***Services*** -> ***My Services***
 
-    ![navigate to my services](img/navigate-to-my-services.png)
+    ![navigate to my services](img/navigate-to-my-services.png) 
 
 1. You should see a new tile representing the Ansible Playbook Service you just ordered
 
@@ -546,7 +529,7 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
 
     ![ansible Playbook output](img/ansible-playbook-output.png)
 
-    If the Playbook execution has not completed, you can click the reload icon to refresh the information. The ***Reload*** icon is represented by a little arrow, left of the ***Configuration*** menu.
+    If the Playbook execution has not completed, you can click the reload icon to refresh the information. The ***Reload*** icon is represented by two little arrows, left of the ***Configuration*** menu.
 
     ![reload icon](img/reload-icon.png)
 
@@ -556,9 +539,9 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
 
 To make sure the user was really created, follow these steps.
 
-1. Click on your username on the top right and click on ***Configuration***
+1. Click on the little clockwork near to your username on the top right
 
-    ![navigate to configuration](img/navigate-to-configuration.png)
+    ![navigate to configuration](img/clockwork.png) 
 
 1. Click on ***Access Control*** in the accordion on the left
 
@@ -598,9 +581,9 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
 
     ***Description:*** Order this catalog item provision a Virtual Machine on VMware vCenter
 
-    Check this box to make the Service Catalog Item visible in the Service Catalog. This remains unselected for Service Catalog Items which are still in draft mode or should only be used as a part of a Service Catalog Bundle:
+    Slide this box to make the Service Catalog Item visible in the Service Catalog. This remains unselected for Service Catalog Items which are still in draft mode or should only be used as a part of a Service Catalog Bundle:
 
-    ***Display in Catalog:*** Yes (check the box)
+    ***Display in Catalog:*** Yes (slide the box)
 
     The Service Catalog in which this Service Catalog Item should be listed:
 
@@ -616,7 +599,9 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
 
     Credentials used to run the Playbook:
 
-    ***Machine Credentials:*** CFME Default Credentials
+    ***Machine Credential:*** CFME Default Credentials
+    
+    ***Vault Credential:*** nothing
 
     If you want to run your Playbook against a Cloud Provider, you have to select which one:
 
@@ -632,7 +617,7 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
 
     ***Variable:*** vcenter_hostname
 
-    ***Default:*** vcenter.example.com
+    ***Default:*** 192.168.0.50
 
     Click on the little plus icon (+) to save the variable. Repeat the process for the second variable:
 
@@ -650,7 +635,7 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
 
     ***Variable:*** template
 
-    ***Default:*** rhel6tmpl
+    ***Default:*** RHEL 7
 
     Click on the little plus icon (+) to save the variable. Repeat the process for the second variable:
 
@@ -712,7 +697,7 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
 
     ![create user service details](img/vm-prov-service-details.png)
 
-    Since this Service does not create a Virtual Machine, the box "VMs" will always say "No Records found"
+    Since this Service does not create a Virtual Machine, the box "VMs" will always say "No Records found", even the playbook does
 
 1. Click on the ***Provisioning*** tab to see the output of the Ansible Playbook
 
