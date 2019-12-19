@@ -870,7 +870,7 @@ We want to see how the resulting Service Catalog Item looks like.
 
 ## Policies and Ansible
 
-In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. This is not meant to be a real world example, but instead, a way to demonstrate the power of Ansible in combination with the 
+In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. This is not meant to be a real world example, but instead, a way to demonstrate the power of Ansible in combination with the CloudForms control policies. 
 
 ### Creating the Service
 
@@ -879,6 +879,9 @@ Control Policies drive Control Actions. Ansible Playbooks can now be executed as
 First we need to create a Catalog to store the service in, do this by clicking Services/Catalogs and create new by clicking Configuration button and selecting Add New Catalog.
 
 ### Create a Service Catalog Item for the Playbook
+1. Navigate to ***Services*** -> ***Catalogs***
+
+    ![navigate to service catalogs](img/navigate-to-service-catalog.png)
 
 1. Click on ***Catalog Items*** in the accordion on the left
 

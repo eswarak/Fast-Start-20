@@ -31,6 +31,6 @@
       name: "{{ guest_name }}"
       validate_certs: "false"
       hardware:
-        memory_mb: 1024
+        memory_mb: "{{ memory }}
         num_cpus: 1
     delegate_to: "localhost"
