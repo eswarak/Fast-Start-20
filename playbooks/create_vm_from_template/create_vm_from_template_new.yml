@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars:
+    vcenter_server: "192.168.0.50"
+    vcenter_user: "administrator@vsphere.local"
+    vcenter_pass: "Redhat1!"
+    datacenter_name: "Datacenter"
+    cluster_name: "DC01"
+  tasks:
+  - name: Clone the template
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: web02
+      template: RHEL7
+      datacenter: "{{ datacenter_name }}"
+      folder: /VMs
+      cluster: "{{ cluster_name }}"
+      datastore: "NFS"
+    delegate_to: localhost
