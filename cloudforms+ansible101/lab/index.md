@@ -635,7 +635,7 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
 
     ***Variable:*** template
 
-    ***Default:*** RHEL 7
+    ***Default:*** RHEL7
 
     Click on the little plus icon (+) to save the variable. Repeat the process for the second variable:
 
