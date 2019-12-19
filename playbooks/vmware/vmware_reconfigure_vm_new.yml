@@ -3,7 +3,7 @@
 
   vars:
    vcenter_hostname: "192.168.0.50"
-   vcenter_hostname: "administrator@vsphere.local"
+   vcenter_username: "administrator@vsphere.local"
    vcenter_password: "Redhat1!"
    guest_name: "cfme058"
    memory: "1024"
