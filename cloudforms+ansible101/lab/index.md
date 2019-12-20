@@ -171,6 +171,8 @@ As we explained before, your lab is built out of
 
 Open the browser and point to [https://cf-<GUID>.rhpds.opentlc.com](https://cf-<GUID>.rhpds.opentlc.com) and login with user: `admin` and password `smartvm`
 
+***Note*** if you get an error while connecting, please give some more time for the process to start. If you want to check if the service has started properly, run `systemctl status evmserverd`
+
 Let's add the vCenter Provider:
 
 1. Navigate to ***Compute*** -> ***Infrastructure*** -> ***Providers*** (in CloudForms 5.0 you should be here already when you log in) and click on Add Provider
@@ -192,6 +194,7 @@ Let's add the vCenter Provider:
     **Password**: Redhat1!
 
 3. Click on `Validate`
+
 4. Once the validation is successful, click on `Add`
 
     ![Add Vmware](img/add-vmware.png)
@@ -228,11 +231,11 @@ Let's add the RHV Provider:
 4. Once the validation is successful, click on `Add`
 -->
 
-1. Now you're ready to go!
+**Now you're ready to go!**
 
-## CloudForms with Ansible batteries included
+## CloudForms with Ansible
 
-This lab will guide you through the process of using the embedded Ansible features of CloudForms.
+This part of the lab will guide you through the process of using the embedded Ansible features of CloudForms.
 
 ### Introduction to Ansible
 
@@ -248,7 +251,7 @@ Before we start,  we want to make sure the embedded Ansible role is enabled and 
 
 1. Log into your CloudForms Appliance
 
-2. Locate, at the top right corner of the screen a little clockwork that takes you to configuration
+2. Locate, at the top right corner of the screen a little clockwork next to the your name that takes you to configuration
 
     ![Clockwork](img/clockwork.png)
 
@@ -275,8 +278,6 @@ To be able to run Ansible Playbooks, they have to become available in CloudForms
     ***Description:*** Example Playbooks
 
     ***URL:*** [https://github.com/vestival/Fast-Start-20.git](https://github.com/vestival/Fast-Start-20.git)
-
-    ***SCM Update Options:*** check "Update on Launch"
 
     ![add a new repository](img/add-ansible-repository.png)
 
@@ -326,11 +327,11 @@ In the meantime the repository you created should have completed the initial syn
 
 If there are no Playbooks listed, check the repository was configured correctly. Click the notification icon on the top right (the little bell icon) and check if there are any errors listed. The initial import can also take a minute or two, did you wait long enough?
 
-### Install pysphere
+### Install pyvmomi
 
-In order to use the Ansible VMware modules you need to install a python library call "pysphere". You need to ssh to you student workstation and jump to the CloudForms server.
+In order to use the Ansible VMware modules you need to install a python library call "pyvmomi". You need to ssh to your CloudForms server.
 
-`$ sudo pip3 install -U pysphere`
+`$ sudo pip3 install -U pyvmomi`
 
 ### Build a Service Catalog to create and delete users
 
