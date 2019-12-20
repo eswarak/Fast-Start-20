@@ -1,7 +1,5 @@
 # Lab Introduction
 
-[[TOC]]
-
 TOC
 
 ## Introduction to CloudForms
@@ -78,7 +76,7 @@ As we explained before, your lab is built out of
 
         ssh root@cf-<GUID>.rhpds.opentlc.com
 
-2. Then you need to access to the launch the `appliance_console`command that will bring you to the summary page of the appliance
+2. Then you need to access to the launch the `appliance_console` command that will bring you to the summary page of the appliance
 
         Welcome to the CFME Virtual Appliance.
 
