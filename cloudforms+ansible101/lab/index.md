@@ -1,62 +1,6 @@
 # Lab Introduction
 
-<!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
-
-- [Lab Introduction](#lab-introduction)
-	- [Introduction to CloudForms](#introduction-to-cloudforms)
-		- [Access the lab environment](#access-the-lab-environment)
-	- [Lab1: Setting up the environment](#lab1-setting-up-the-environment)
-		- [Environment architecture](#environment-architecture)
-		- [Set up CloudForms](#set-up-cloudforms)
-		- [Add the VMware Provider](#add-the-vmware-provider)
-		- [Add Red Hat Virtualization Provider](#add-red-hat-virtualization-provider)
-	- [CloudForms with Ansible batteries included](#cloudforms-with-ansible-batteries-included)
-		- [Introduction to Ansible](#introduction-to-ansible)
-		- [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
-		- [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
-		- [Add vCenter credentials](#add-vcenter-credentials)
-		- [Verify repository sync](#verify-repository-sync)
-		- [Install pysphere](#install-pysphere)
-		- [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
-		- [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
-		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
-		- [Order the "create user" Service Catalog Item](#order-the-create-user-service-catalog-item)
-		- [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
-		- [Verify Playbook results](#verify-playbook-results)
-		- [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
-		- [Order the Virtual Machine Provisioning Service Catalog Item](#order-the-virtual-machine-provisioning-service-catalog-item)
-		- [Monitor VM provisioning Playbook execution](#monitor-vm-provisioning-playbook-execution)
-		- [Extend CloudForms builtin Capabilities](#extend-cloudforms-builtin-capabilities)
-		- [Add a Git repository for Automate](#add-a-git-repository-for-automate)
-		- [Verify Automate import](#verify-automate-import)
-		- [Optimize the Dialog](#optimize-the-dialog)
-		- [Update the Service Catalog Item](#update-the-service-catalog-item)
-		- [Test the new Service Dialog](#test-the-new-service-dialog)
-	- [Policies and Ansible](#policies-and-ansible)
-		- [Creating the Service](#creating-the-service)
-		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook-1)
-		- [Creating Control Action](#creating-control-action)
-		- [Create VM Control Policy](#create-vm-control-policy)
-		- [Setting Event Assignment](#setting-event-assignment)
-		- [Setting Control Action on Event](#setting-control-action-on-event)
-		- [Creating and Assigning Policy Profile](#creating-and-assigning-policy-profile)
-		- [Assign the policy profile](#assign-the-policy-profile)
-		- [Testing the Policy Profile](#testing-the-policy-profile)
-	- [Advanced labs](#advanced-labs)
-		- [Use the Self Service user Interface](#use-the-self-service-user-interface)
-		- [Use role Based Access Control to publish Service Catalog](#use-role-based-access-control-to-publish-service-catalog)
-		- [User Groups](#user-groups)
-		- [Roles](#roles)
-		- [More details](#more-details)
-		- [Create a Role](#create-a-role)
-		- [Create a new Group](#create-a-new-group)
-		- [Create a new User](#create-a-new-user)
-		- [Test user Joe Doe](#test-user-joe-doe)
-		- [Grant access to certain Catalog Items](#grant-access-to-certain-catalog-items)
-		- [Test once more as Joe Doe](#test-once-more-as-joe-doe)
-	- [Even more?](#even-more)
-
-<!-- /TOC -->
+TOC
 
 ## Introduction to CloudForms
 
@@ -109,82 +53,80 @@ The ID &lt;GUID&gt; is unique to your lab environment.
 ## Lab1: Setting up the environment
 
 ### Environment architecture
+
 As we explained before, your lab is built out of
 
-* CloudForms 5.0 appliance
+- CloudForms 5.0 appliance
 
-* RHV
+- RHV
 
-* VMware
+- VMware
 
-* Ansible Tower
+- Ansible Tower
 
 ***Note:*** This architecture is only for labs and POCs, and should never make it into any production-like environment, as it has one single appliance that will perform all the operations
 
-
-![](img/lab-architecture.png)
+![Lab architecture](img/lab-architecture.png)
 
 ### Set up CloudForms
 
 1. The first step is to initialize CloudForms. You need to ssh into the CloudForms appliance
 
-`ssh root@cf-<GUID>.rhpds.opentlc.com`
+        `ssh root@cf-<GUID>.rhpds.opentlc.com`
 
 2. Then you need to access to the launch the `appliance_console`command that will bring you to the summary page of the appliance
 
+        Welcome to the CFME Virtual Appliance.
 
-		Welcome to the CFME Virtual Appliance.
+        To modify the configuration, use a web browser to access the management page.
 
-		To modify the configuration, use a web browser to access the management page.
-
-		Hostname:                cf.example.com
-		IPv4 Address:            192.168.0.3/255.255.255.0
-		IPv4 Gateway:            192.168.0.2
-		IPv6 Address:
-		IPV6 Gateway:
-		Primary DNS:             192.168.0.1
-		Secondary DNS:
-		Search Order:            localdomain example.com
-		MAC Address:             2c:c2:60:72:98:35
-		Timezone:                America/New_York
-		Local Database Server:   not initialized
-		CFME Server:             not running
-		CFME Database:           not configured
-		Database/Region:         not configured
-		External Auth:           not configured
-		CFME Version:            5.11.1.2
+        Hostname:                cf.example.com
+        IPv4 Address:            192.168.0.3/255.255.255.0
+        IPv4 Gateway:            192.168.0.2
+        IPv6 Address:
+        IPV6 Gateway:
+        Primary DNS:             192.168.0.1
+        Secondary DNS:
+        Search Order:            localdomain example.com
+        MAC Address:             2c:c2:60:72:98:35
+        Timezone:                America/New_York
+        Local Database Server:   not initialized
+        CFME Server:             not running
+        CFME Database:           not configured
+        Database/Region:         not configured
+        External Auth:           not configured
+        CFME Version:            5.11.1.2
 
 
-		Press any key to continue.
+        Press any key to continue.
 
 3. After pressing any key, you will access to the main menu
 
+        Advanced Setting
 
-		Advanced Setting
+        1) Configure Network
+        2) Set Timezone
+        3) Set Date and Time
+        4) Create Database Backup
+        5) Create Database Dump
+        6) Restore Database From Backup
+        7) Configure Database
+        8) Configure Database Replication
+        9) Logfile Configuration
+        10) Configure Application Database Failover Monitor
+        11) Extend Temporary Storage
+        12) Configure External Authentication (httpd)
+        13) Update External Authentication Options
+        14) Generate Custom Encryption Key
+        15) Harden Appliance Using SCAP Configuration
+        16) Stop EVM Server Processes
+        17) Start EVM Server Processes
+        18) Restart Appliance
+        19) Shut Down Appliance
+        20) Summary Information
+        21) Quit
 
-		1) Configure Network
-		2) Set Timezone
-		3) Set Date and Time
-		4) Create Database Backup
-		5) Create Database Dump
-		6) Restore Database From Backup
-		7) Configure Database
-		8) Configure Database Replication
-		9) Logfile Configuration
-		10) Configure Application Database Failover Monitor
-		11) Extend Temporary Storage
-		12) Configure External Authentication (httpd)
-		13) Update External Authentication Options
-		14) Generate Custom Encryption Key
-		15) Harden Appliance Using SCAP Configuration
-		16) Stop EVM Server Processes
-		17) Start EVM Server Processes
-		18) Restart Appliance
-		19) Shut Down Appliance
-		20) Summary Information
-		21) Quit
-
-		Choose the advanced setting:
+        Choose the advanced setting:
 
 4. Select option `7) Configure Database`
 5. Select option `1) Create key`
@@ -197,62 +139,62 @@ As we explained before, your lab is built out of
 12. Press any key to continue.
 13. This will take you back to the summary screen. Please, note that now the CFME server is running
 
-		Welcome to the CFME Virtual Appliance.
+        Welcome to the CFME Virtual Appliance.
 
-		To modify the configuration, use a web browser to access the management page.
+        To modify the configuration, use a web browser to access the management page.
 
-		Hostname:                cf.example.com
-		IPv4 Address:            192.168.0.3/255.255.255.0
-		IPv4 Gateway:            192.168.0.2
-		IPv6 Address:
-		IPV6 Gateway:
-		Primary DNS:             192.168.0.1
-		Secondary DNS:
-		Search Order:            localdomain example.com
-		MAC Address:             2c:c2:60:72:98:35
-		Timezone:                America/New_York
-		Local Database Server:   running (primary)
-		CFME Server:             running
-		CFME Database:           localhost
-		Database/Region:         vmdb_production / 0
-		External Auth:           not configured
-		CFME Version:            5.11.1.2
+        Hostname:                cf.example.com
+        IPv4 Address:            192.168.0.3/255.255.255.0
+        IPv4 Gateway:            192.168.0.2
+        IPv6 Address:
+        IPV6 Gateway:
+        Primary DNS:             192.168.0.1
+        Secondary DNS:
+        Search Order:            localdomain example.com
+        MAC Address:             2c:c2:60:72:98:35
+        Timezone:                America/New_York
+        Local Database Server:   running (primary)
+        CFME Server:             running
+        CFME Database:           localhost
+        Database/Region:         vmdb_production / 0
+        External Auth:           not configured
+        CFME Version:            5.11.1.2
 
 
-		Press any key to continue.
+        Press any key to continue.
 
 14. Press `21) Quit` to quit the console and exit the terminal
 
 ### Add the VMware Provider
 
-Open the browser and point to https://cf-<GUID>.rhpds.opentlc.com and login with user: `admin`and password `smartvm`
+Open the browser and point to https://cf-<GUID>.rhpds.opentlc.com and login with user: `admin` and password `smartvm`
 
 Let's add the vCenter Provider:
 
 1. Navigate to ***Compute*** -> ***Infrastructure*** -> ***Providers*** (in CloudForms 5.0 you should be here already when you log in) and click on Add Provider
 
-![](img/add-provider.png)
+    ![Add Provider](img/add-provider.png)
 
 2. Provide all the required parameters
 
-**Name**: vCenter
+    **Name**: vCenter
 
-**Type**: VMware vCenter
+    **Type**: VMware vCenter
 
-**Zone**: Default
+    **Zone**: Default
 
-**Hostname**: 192.168.0.50
+    **Hostname**: 192.168.0.50
 
-**Username**: administrator@vsphere.local
+    **Username**: administrator@vsphere.local
 
-**Password**: Redhat1!
+    **Password**: Redhat1!
 
 3. Click on `Validate`
 4. Once the validation is successful, click on `Add`
 
-![](img/add-vmware.png)
+    ![Add Vmware](img/add-vmware.png)
 
-***Note:*** Please, give a couple of minutes to discover the information from the provider
+    ***Note:*** Please, give a couple of minutes to discover the information from the provider
 
 5. Refresh the browser and you will get the updated info of the provider
 
