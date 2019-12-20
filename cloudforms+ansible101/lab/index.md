@@ -701,13 +701,13 @@ First we need to create a Catalog to store the service in, do this by clicking S
 
     ***Variable:*** vcenter_server
 
-    ***Default:*** vcenter.example.com
+    ***Default:*** 192.168.0.50
 
     Click on the little plus icon (+) to save the variable. Repeat the process for the second variable:
 
     ***Variable:*** guest_server
 
-    ***Default:*** \<TBD>
+    ***Default:*** cfme058
 
     Click on the little plus icon (+) to save the variable.
 
@@ -716,6 +716,8 @@ First we need to create a Catalog to store the service in, do this by clicking S
     ***Dialog name:*** vm_reconfig
 
     ![vm-reconfig-service](img/vm-reconfig-service.png)
+
+    Click on `Add` to save the catalog item.
 
 ### Creating Control Action
 
@@ -816,7 +818,7 @@ For a policy to work, it needs a policy profile to be attached to. The policy pr
 
     ***Description:*** Desired State Policies
 
-1. Move the “Reset VM for CPU and Memory” policy from available to Profile Policies list.
+1. Move the “VM and Instance Control: Reset VM for CPU and Memory” policy from available to Profile Policies list.
 
     ![move-policy](img/move-policy.png)
 
@@ -828,7 +830,9 @@ For a policy to work, it needs a policy profile to be attached to. The policy pr
 
     ![navigate-compute-infrastructure-vms](img/navigate-compute-infrastructure-vms.png)
 
-1. Select a Power Off VM
+1. Select the VM cfme058
+
+    ![select_vm](img/select_vm.png)
 
 1. Go to ***Policy*** -> ***Manage Policies***
 
@@ -844,241 +848,37 @@ For a policy to work, it needs a policy profile to be attached to. The policy pr
 
 ### Testing the Policy Profile
 
-We will see the output in CloudForms in the form of a service in my services as well as the actual VM inventory will change. To see more real time, it's advised during testing to open the policy.log file on the CloudForms appliance. This shows when events are caught by CloudForms and confirms the policy matches.
+To see the results in real time, it's advised during testing to open the policy.log file on the CloudForms appliance. This shows when events are caught by CloudForms and confirms the policy matches.
 
-Start by going to vSphere Web Client and selecting the VM that you identified for your service and policy earlier.
+1. Navigate to ***Compute*** -> ***Infrastructure*** -> ***Virtual Machines***
 
-1. Go to the vCenter console, pick the VM you assigned the Policy and modify the CPU and Memory values to
+    ![navigate-compute-infrastructure-vms](img/navigate-compute-infrastructure-vms.png)
 
-    ***CPU:*** 3
+1. Select the VM cfme058
 
-    ***Memory:*** 4096 MB
+    ![select_vm](img/select_vm.png)
 
-    ![vmware-edit-settings](img/vmware-edit-settings.png)
+1. Click on ***Configuration*** -> ***Reconfigure Selected Items***
+  
+    ![reconfigure-selected-items](img/reconfigure-selected-items.png)
 
-    You can see the vSphere Web Client task running to change the CPU and Memory.
+1. Slide Memory and select 3GB, slide Processors and select 2 Sockets
 
-1. Go back to the CloudForms console and navigate to ***Services*** -> ***Requests***
+    ![memory-cpu](img/memory-cpu.png)
 
-    ![navigate-to-services-requests](img/navigate-to-services-requests.png)
+1. Click on Submit. This will take you to request, and you can see how the process of VM reconfiguration is kicked off and right after the playbook is executed. 
 
-1. Wait until your request (service) is finished
+1. Click on Refresh to update the list of running requests. 
 
-    ![policy-service](img/policy-service.png)
+    ![memory-cpu.png](img/memory-cpu.png)
 
-1. Go back to the vCenter console and verify that is has 1 CPU and 1 GB of RAM
+1. Navigate to ***Compute*** -> ***Infrastructure*** -> ***Virtual Machines***
 
-    ![verify-vmware-vm](img/verify-vmware-vm.png)
+    ![navigate-compute-infrastructure-vms](img/navigate-compute-infrastructure-vms.png)
 
-## Advanced labs
+1. Click on the VM cfme058 and verify that now it has 1GB of RAM and 1 CPU
 
-If you were able to complete all the steps and still have some time left, here are a couple of things you can do to get more familiar with CloudForms.
-
-### Use the Self Service user Interface
-
-The user interface we used so far is often referenced as the "Operations UI" or the "Classic UI". A new, more modern, Self Service user Interface is also available and receives improvements with every release.
-
-The Self Service user Interface can be accessed by appending the string "self_service" to the Appliance URL.
-
-[https://cf-&lt;GUID&gt;.labs.rhepds.com/self_service](https://cf-&lt;GUID&gt;.labs.rhepds.com/self_service)
-
-You can login with the same credentials as before.
-
-### Use role Based Access Control to publish Service Catalog
-
-So far we have created Catalog Items which are visible to any logged in user. In most Enterprise environments, specific Service Catalog items should only be accessible for certain user groups.
-
-CloudForms offers a very granular system for role Based Access Control (RBAC). This allows system administrator to grant or deny specific privileges to reduce visibility, reduce risk of human errors or provide better cost control.
-
-In this advanced lab we want only specific Catalog Items to be available for certain user groups. CloudForms is using tags to identify objects. For example, if a Service Catalog Item is tagged as "Department Engineering" only users which are in a group which is also tagged as "Department Engineering" will see and be able to order this Catalog Item.
-
-### User Groups
-
-A user is always member of at least one user group. The group defines the visibility granted to all member users. For example, members of the group "Department Engineering" can see all objects tagged with this tag.
-
-### Roles
-
-The role defines which actions are allowed to groups associated to this role. For example the role can grant the privilege to start or stop Virtual Machines, manage Service Catalog items, or define and use reports.
-
-Since roles can be associated to multiple groups, they can be reused. A user in Department Engineering might have the same privileges as a user in Department Sales, but they will see different objects which they can interact with.
-
-### More details
-
-If you want to learn more about CloudForms' Role Based Access Control, you can read the [official product documentation](https://access.redhat.com/documentation/en/red-hat-cloudforms/). The chapter [access control](https://access.redhat.com/documentation/en-us/red_hat_cloudforms/5.0/html/general_configuration/configuration#access-control) in the [General Configuration](https://access.redhat.com/documentation/en-us/red_hat_cloudforms/4.5/html/general_configuration/) Guide also provides more background information. Last but not least, there is a good summary about [Using Tags for Access Control](http://cloudformsblog.redhat.com/2016/10/13/using-tags-for-access-control/) on the [official CloudForms Blog](http://cloudformsblog.redhat.com).
-
-### Create a Role
-
-For this lab, we first want to create a role which we want to use for testing.
-
-1. Navigate to ***Configuration*** on the top right menu
-
-    ![navigate to configuration](img/navigate-to-configuration.png)
-
-1. Click on ***Access Control*** in the accordion on the left
-
-    ![access control](img/navigate-to-access-control.png)
-
-1. Click on ***roles*** and ***Configuration*** -> ***Add a new role***
-
-    ![add a new role](img/add-a-new-role.png)
-
-1. We want to define a new role, which has enough privileges to order and interact with Service Catalog Items.
-
-    ***Name:*** Self Server role
-
-    ***Access Restriction for Services, VMs, and Templates:*** None
-
-    Defining the privileges is actually very simple. The tree view allows us to simply select or unselect the privileges we want to grant to users associated to this role.
-
-    1. Let's unselect all items on the first level, except for "Services".
-
-    1. Click on the little triangular icon next to "Services" to open the sub folder. Make sure "My Services", "Workloads" and "Request" are selected.
-
-    1. Click on the little triangular icon next to "Catalogs Explorer" and make sure everything except "Service Catalogs" is not selected.
-
-    The resulting dialog should look like this:
-
-    ![defined self server role](img/define-self-service-role.png)
-
-1. Click ***Add*** to save the new role
-
-1. Now we want to create a group associated to this role. Click on ***groups*** and ***Configuration*** -> ***Add a new group***
-
-    ![add a new group](img/add-new-group.png)
-
-### Create a new Group
-
-Next we want to create a group and assign it to the role we just created.
-
-1. Create the new group
-
-    ***Description:*** Self Service Engineering
-
-    Select the role "Self Service role" you just created:
-
-    ***role:*** Self Service role
-
-    CloudForms also supports multiple tenants. Since we have not defined any tenants, choose the parent "My Company" tenant:
-
-    ***Project/Tenant:*** My Company
-
-    In "My Company Tags" click on the little triangular icon next to "Department" and click on "Engineering"
-
-    ***Note:*** It is important to only select this particular tag and do not click on any other additional tags!
-
-    ![define new group](img/define-new-group.png)
-
-1. Click on ***Add*** to create this new group
-
-### Create a new User
-
-Finally we want to create a user which is a member of the group we just created.
-
-1. Click on ***users*** and ***Configuration*** -> ***Add a new user***
-
-    ![add a new user](img/add-new-user.png)
-
-1. Create a new user with these parameters:
-
-    ***Full Name:*** Joe Doe
-
-    ***username:*** joe
-
-    ***Password:*** r3dh4t1!
-
-    ***Confirm Password:*** r3dh4t1!
-
-    ***E-mail Address:*** joe@example.com
-
-    ***Note:*** CloudForms is not configured to send out emails, but the email address is a mandatory field
-
-    ***group:*** Self Service Engineering
-
-    ![add new user Joe Doe](img/add-user-joe-doe.png)
-
-    Click on ***Add*** to create the user
-
-### Test user Joe Doe
-
-So far we have not assigned any objects to the new group, but we have granted very specific rights to members of that group.
-
-Let's see what happens if we log into CloudForms as "Joe Doe".
-
-***Note:*** You can not log into CloudForms with different users while you're in the same browser session. You have to log out and log in again. As an alternative, you can use a different browser, if available, or you can open an additional window in "private" mode.
-
-1. Log out of CloudForms by clicking on the user name on the top right and click on ***Logout***
-
-    ![logout](img/logout.png)
-
-1. Log in as user Joe Doe:
-
-    ***username:*** joe
-
-    ***Password:*** r3dh4t1!
-
-    ![login as Joe Doe](img/login-as-joe-doe.png)
-
-1. You should notice that most of the menus are gone now. On the top level menu on the left, we can only click on ***Services*** and have only four sub menus available.
-
-1. Navigate to the service catalog
-
-    ![navigate to service catalog](img/navigate-to-service-catalog-joe-doe.png)
-
-1. You should notice that there are no Catalog Items available! Although we have defined some Catalog Items earlier in this lab, none of them are available to the "Self Service Engineering" group.
-
-1. Let's logout again
-
-    ![logout](img/logout.png)
-
-### Grant access to certain Catalog Items
-
-We want to make one Catalog Item available to all users which are members of the "Self Service Engineering" group.
-
-1. Log into CloudForms as admin
-
-1. Navigate to ***Services*** -> ***Catalogs***
-
-    ![navigate to services catalogs](img/navigate-to-service-catalog.png)
-
-1. Click on ***Catalog Items*** in the accordion on the left
-
-    ![navigate to catalog items](img/navigate-to-catalog-items-heat.png)
-
-1. Click on ***Virtual Machines*** and ***Simple VM***
-
-    ![catalog item simple vm details](img/catalog-item-simple-vm-details.png)
-
-1. Click on ***Policy*** -> ***Edit Tags***
-
-    ![catalog item edit tags](img/catalog-item-edit-tags.png)
-
-1. Assign the Tag "Department" / "Engineering" to the Catalog Item
-
-    ![assign department engineering tag](img/assign-department-engineering-tag.png)
-
-1. Click ***Save*** to commit the changes
-
-### Test once more as Joe Doe
-
-We want to do another test and see if the user Joe Doe can now see and other the Catalog Item.
-
-1. Log out
-
-    ![logout](img/logout.png)
-
-1. Log in as Joe Doe
-
-    ![login as Joe Doe](img/login-as-joe-doe.png)
-
-1. Navigate to ***Services*** -> ***Catalogs***
-
-    ![navigate to service catalogs](img/navigate-to-service-catalog.png)
-
-1. Now you should see one Service Catalog Item: "Simple VM" - but no other Service Catalog Items.
-
-    ![service catalog](img/service-catalog-joe-doe.png)
-
-1. If you want, you can order the Service Catalog Item and should see that it will be deployed perfectly.
+    ![verify](img/verify.png)
 
 ## Even more
 
