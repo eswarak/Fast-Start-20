@@ -1,13 +1,16 @@
 # Lab Introduction
 
+[[TOC]]
+
 TOC
 
 ## Introduction to CloudForms
 
 [General introduction](../../common/index.md)
 
-### Access the lab environment
+## Access the lab environment
 
+<!--
 Navigate to the RHPDS Portal and order the "Getting Well With CloudForms" in the catalog "Cloud Infrastructure Demos".
 
 [https://rhpds.redhat.com](https://rhpds.redhat.com)
@@ -25,6 +28,7 @@ Click on the "EMEA RHTE CF Lab" and click on ***Order*** to start deployment.
 ***Note:*** Give the lab up to 15 minutes to complete provisioning!
 
 You will receive an email with the list of all virtual machines which have been deployed as part of the lab.
+-->
 
 The lab is comprised of a number of systems:
 
@@ -50,7 +54,7 @@ The ID &lt;GUID&gt; is unique to your lab environment.
 
 ***Note:*** Your browser might give you a warning message about the used SSL Certificates. These warning messages can be accepted and are due to the fact that each lab deployed with new certificates on request.
 
-## Lab1: Setting up the environment
+## Setting up the environment
 
 ### Environment architecture
 
@@ -72,7 +76,7 @@ As we explained before, your lab is built out of
 
 1. The first step is to initialize CloudForms. You need to ssh into the CloudForms appliance
 
-        `ssh root@cf-<GUID>.rhpds.opentlc.com`
+        ssh root@cf-<GUID>.rhpds.opentlc.com
 
 2. Then you need to access to the launch the `appliance_console`command that will bring you to the summary page of the appliance
 
@@ -167,7 +171,7 @@ As we explained before, your lab is built out of
 
 ### Add the VMware Provider
 
-Open the browser and point to https://cf-<GUID>.rhpds.opentlc.com and login with user: `admin` and password `smartvm`
+Open the browser and point to [https://cf-<GUID>.rhpds.opentlc.com](https://cf-<GUID>.rhpds.opentlc.com) and login with user: `admin` and password `smartvm`
 
 Let's add the vCenter Provider:
 
@@ -208,7 +212,6 @@ Let's add the RHV Provider:
 
 2. Click on ***Configuration*** -> ***Add a New Infrastructure Provider***
 
-
 3. Provide all the required parameters
 
 **Name**: RHV
@@ -228,7 +231,6 @@ Let's add the RHV Provider:
 -->
 
 1. Now you're ready to go!
-
 
 ## CloudForms with Ansible batteries included
 
@@ -250,14 +252,13 @@ Before we start,  we want to make sure the embedded Ansible role is enabled and 
 
 2. Locate, at the top right corner of the screen a little clockwork that takes you to configuration
 
-    ![](img/clockwork.png)
+    ![Clockwork](img/clockwork.png)
 
 3. Click on "Embedded Ansible" Role to enable it
 
     ![ansible role enabled](img/ansible-role-enabled.png)
 
 4. Click on Save
-
 
 ### Add a Git repository of Ansible Playbooks
 
@@ -331,9 +332,7 @@ If there are no Playbooks listed, check the repository was configured correctly.
 
 In order to use the Ansible VMware modules you need to install a python library call "pysphere". You need to ssh to you student workstation and jump to the CloudForms server.
 
-`
-$ sudo pip3 install -U pysphere
-`
+`$ sudo pip3 install -U pysphere`
 
 ### Build a Service Catalog to create and delete users
 
@@ -363,7 +362,7 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     ![navigate to service catalog items](img/add-catalog-item.png)
 
-1. Click on ***Configuration*** -> ***Add a New Catalog Item*** 
+1. Click on ***Configuration*** -> ***Add a New Catalog Item***
 
 1. Select ***Ansible Playbook*** as "Catalog Item Type"
 
@@ -376,7 +375,7 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
     ***Description:*** Order this catalog item to create a new user
 
     ***Display in Catalog:*** Yes (slide the button)
-    
+
     ***Long description:*** Leave it blank
 
     ***Catalog:*** Ansible
@@ -417,7 +416,7 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     There are no variables needed for retirement and the ***Variables & Default Values*** can be left empty.
 
-    ![create user service dialog retirement](img/create-new-user-retire.png) 
+    ![create user service dialog retirement](img/create-new-user-retire.png)
 
 1. Click on ***Add*** to save the catalog item
 
@@ -439,7 +438,7 @@ To make sure everything works as expected, we want to test the Catalog Item we j
 
 1. The default values in the form can be left alone. Optionally you can specify a different user name and password
 
-    ![create user order form](img/create-user-order-form.png) 
+    ![create user order form](img/create-user-order-form.png)
 
 1. Click ***Submit***
 
@@ -453,7 +452,7 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
 
 1. Navigate to ***Services*** -> ***My Services***
 
-    ![navigate to my services](img/navigate-to-my-services.png) 
+    ![navigate to my services](img/navigate-to-my-services.png)
 
 1. You should see a new tile representing the Ansible Playbook Service you just ordered
 
@@ -483,7 +482,7 @@ To make sure the user was really created, follow these steps.
 
 1. Click on the little clockwork near to your username on the top right
 
-    ![navigate to configuration](img/clockwork.png) 
+    ![navigate to configuration](img/clockwork.png)
 
 1. Click on ***Access Control*** in the accordion on the left
 
@@ -542,7 +541,7 @@ In this second part of the lab we want to use an Ansible Playbook to deploy a Vi
     Credentials used to run the Playbook:
 
     ***Machine Credential:*** CFME Default Credentials
-    
+
     ***Vault Credential:*** nothing
 
     If you want to run your Playbook against a Cloud Provider, you have to select which one:
@@ -691,8 +690,8 @@ We want to make sure the Automate Code was properly imported.
 
 1. "Automate" code is organized in "Datastores". Two Datastores are shipped with CloudForms:
 
-    * ManageIQ: These methods are a verbatim copy of the Open Source Community version
-    * RedHat: These methods are only shipped with Red Hat CloudForms and are supported by Red Hat
+    - ManageIQ: These methods are a verbatim copy of the Open Source Community version
+    - RedHat: These methods are only shipped with Red Hat CloudForms and are supported by Red Hat
 
     You can now see an additional third Datastore called "PConf17", which is the one you just imported. Users can create as many additional datastores as they want, but they can not modify or delete the two datastores shipped with the product. Datastores are stacked and prioritized which allows separation of out of the box functionality from custom code.
 
@@ -821,6 +820,7 @@ Control Policies drive Control Actions. Ansible Playbooks can now be executed as
 First we need to create a Catalog to store the service in, do this by clicking Services/Catalogs and create new by clicking Configuration button and selecting Add New Catalog.
 
 ### Create a Service Catalog Item for the Playbook
+
 1. Navigate to ***Services*** -> ***Catalogs***
 
     ![navigate to service catalogs](img/navigate-to-service-catalog.png)
@@ -927,7 +927,7 @@ First we need to create a Catalog to store the service in, do this by clicking S
     ***Description:*** Reset VM for CPU and Memory
 
     ![add-new-control-policy-form](img/add-new-control-policy-form.png)
-    
+
 1. Click add
 
 ### Setting Event Assignment
@@ -1240,7 +1240,7 @@ We want to do another test and see if the user Joe Doe can now see and other the
 
 1. If you want, you can order the Service Catalog Item and should see that it will be deployed perfectly.
 
-## Even more?
+## Even more
 
 If you're already done and still have some time left, here are some ideas for advanced labs:
 
