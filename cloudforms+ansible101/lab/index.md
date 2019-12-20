@@ -335,7 +335,7 @@ In order to use the Ansible VMware modules you need to install a python library 
 
 ### Build a Service Catalog to create and delete users
 
-In this lab we will use an Ansible Playbook to create a local user in CloudForms. This example will also demonstrate how we can define a retirement process as well. In CloudForms' understanding of complete life cycle management, every object has a provisioning and a retirement workflow.
+In section of the lab we will use an Ansible Playbook to create a local user in CloudForms. This example will also demonstrate how we can define a retirement process as well. In CloudForms' understanding of complete life cycle management, every object has a provisioning and a retirement workflow.
 
 ### Create a Service Catalog for Ansible Playbooks
 
@@ -377,7 +377,7 @@ In this lab we will use an Ansible Playbook to create a local user in CloudForms
 
     ***Long description:*** Leave it blank
 
-    ***Catalog:*** Ansible
+    ***Catalog:*** My Company/Ansible
 
     ***Repository:*** Github
 
@@ -495,6 +495,7 @@ To make sure the user was really created, follow these steps.
 
     ![logout](img/logout.png)
 
+<!--
 ### Build a Service Catalog to deploy Virtual Machines
 
 In this second part of the lab we want to use an Ansible Playbook to deploy a Virtual Machine in VMware vCenter. The necessary Playbook should already be in your repository.
@@ -646,171 +647,11 @@ When executing an Ansible Playbook with the embedded role in CloudForms, a "Serv
     If the Playbook execution has not completed, you can click the reload icon to refresh the information. The ***Reload*** icon is represented by a little arrow, left of the ***Configuration*** menu.
 
     ![reload icon](img/reload-icon.png)
-
-### Extend CloudForms builtin Capabilities
-
-In this lab you have so far learned how to use Ansible Playbooks to orchestrate and execute configuration actions. CloudForms is internally using a powerful and extensible framework that defines what happens "under the hood". This feature is called "Automate". "Automate" allows us to understand how things are done and even more interestingly, it allows us to add features which are not coming out of the box.
-
-"Automate" code can either be developed directly in the User Interface, or it can be imported from a Git repository. For this lab we want to keep things simple. We will add a Git repository with a simple method to make the Service Dialog easier to use.
-
-### Add a Git repository for Automate
-
-"Automate" code can either be developed and written directly in the CloudForms Web UI, or it can be imported from a Git repository. We will do the latter:
-
-1. Navigate to ***Automation*** -> ***Automate*** -> ***Import/Export***
-
-    ![navigate to automate import/export](img/navigate-to-automate-import-export.png)
-
-1. Use the following URL to access the Git repository:
-
-    [https://github.com/cbolz/partner-conference-2017-labs.git](https://github.com/cbolz/partner-conference-2017-labs.git)
-
-    ![adding the Automate Git repository](img/adding-automate-git.png)
-
-1. Click ***Submit***. It will take a few moments to check the Git repository.
-
-1. The "Branch/Tag" and "Branch" fields allow us to import different tags or branches, for example "Development", "Testing", "QA", etc.
-
-    For this lab, we stick with the defaults and click on ***Submit***
-
-    ![select Automate tag or branch](img/select-automate-tag-branch.png)
-
-1. The first import can take a few moments. After that you should see the following confirmation:
-
-    ![after first Automate import](img/after-first-automate-import.png)
-
-### Verify Automate import
-
-We want to make sure the Automate Code was properly imported.
-
-1. Navigate to ***Automation*** -> ***Automate*** -> ***Explorer***
-
-    ![navigate to Automate Explorer](img/navigate-to-automate-explorer.png)
-
-1. "Automate" code is organized in "Datastores". Two Datastores are shipped with CloudForms:
-
-    - ManageIQ: These methods are a verbatim copy of the Open Source Community version
-    - RedHat: These methods are only shipped with Red Hat CloudForms and are supported by Red Hat
-
-    You can now see an additional third Datastore called "PConf17", which is the one you just imported. Users can create as many additional datastores as they want, but they can not modify or delete the two datastores shipped with the product. Datastores are stacked and prioritized which allows separation of out of the box functionality from custom code.
-
-    The screenshot was created after expanding all folders (which are actually called "Namespaces" and "Classes":
-
-    ![Automate with custom method](img/automate-with-custom-method.png)
-
-This concludes the preparation for the next part of the lab.
-
-### Optimize the Dialog
-
-The Service Dialog we created so far, is not ideal for most use cases. We want users to focus on getting their service as quickly and easily as possible. An ideal Service Dialog only asks the absolutely necessary questions. With this in mind, we can optimize the automatically created Service Dialog created in the previous part of the lab.
-
-1. Navigate to ***Automation*** -> ***Automate*** -> ***Customization***
-
-    ![navigate to customization](img/navigate-to-customization.png)
-
-1. Click on ***Service Dialog*** in the accordion on the left
-
-    ![navigate to service dialogs](img/service-dialog-accordion.png)
-
-1. Click on the Dialog which was created in the previous step "provision-vm-vcenter"
-
-1. Click on ***Configuration*** -> ***Copy this Dialog***. We want to keep the original version of the Dialog, which will allow us to have a backup.
-
-1. Edit the Label and Description to something a bit more meaningful
-
-    ***Label:*** provision-vm-vcenter-v2
-
-    ***Description:*** Optimized version of the Service Dialog
-
-    ***Note:*** Do not click on ***Add*** yet, we want to do some more changes!
-
-1. We want to do several changes on this Dialog.
-
-    Change the Label to something more meaningful:
-
-    ***Label:*** provision-vm-vcenter-v2
-
-1. The elements in the "Options" box will always be left to the default values for our Service Catalog Item to work. Since our users are never going to change any of the field in the "Options" box, we can simply delete the entire box.
-
-    Click on the Box "Options" and then on the little trash bin icon to delete it and all its child elements.
-
-    ![delete options box](img/delete-options-box.png)
-
-    ***Note:*** Make sure you have highlighted the correct element! If you deleted the wrong element by accident, you can click on ***Cancel*** and start over.
-
-1. The ESXi host which will actually create the virtual machine, is always the same in this lab. We can hide the element to simplify the Dialog further.
-
-    Click on the Element "esxi_host" and unselect the "visible" box
-
-    ![make host invisible](img/esxi-visibility.png)
-
-1. The same applies for the "Datacenter". In this lab, there is only one.
-
-    ![make datacenter invisible](img/datacenter-visibility.png)
-
-1. To finish the our optimizations, we want to make the vCenter a dynamic drop down. Instead of providing possible values as a hard coded list, or asking the user for manual input, we can use program code to create a list of applicable options.
-
-    In this example, we want the list of available vCenters dynamically populated (Although there is still only one vCenter and the value is questionable at best. But it's a good example of CloudForms' capabilities nonetheless)
-
-    Click on the Element "vcenter_hostname" and change the type to "Drop down list". Then click the check box "Dynamic". This will change the form and show us new fields:
-
-    ![form after selecting dynamic](img/vcenter-dynamic-checked.png)
-
-    Click on "Entry Point". A window will pop up which allows us to specify which method instance should be called to populate this Element.
-
-    Select the Instance called "get_vcenter_list" and click ***Apply***.
-
-    ![select get_vcenter_list instance](img/get_vcenter_list-instance.png)
-
-    The resulting Service Dialog Element should look like this:
-
-    ![vcenter dynamic drop down list](img/vcenter-dynamic-drop-down.png)
-
-1. Click on ***Add** to save all changes
-
-### Update the Service Catalog Item
-
-We have to change the Service Catalog Item to use the Service Dialog we just created.
-
-1. Navigate to ***Services*** -> ***Catalogs***
-
-    ![navigate to service catalogs](img/navigate-to-service-catalog.png)
-
-1. Navigate to ***Catalog Items*** in the accordion on the left and click on the "Provision Virtual Machine" Service Catalog Item
-
-    ![navigate to catalog items](img/vm-prov-service-catalog-item.png)
-
-1. Click on ***Configuration*** -> ***Edit this Item***
-
-1. In the ***Dialog*** Section of the UI, change the value from "provision-vm-vcenter" to "provision-vm-vcenter-v2"
-
-    ![change dialog to provision-vm-vcenter-v2](img/dialog-vm-provision-vcenter-v2.png)
-
-1. Click ***Save*** to commit the changes
-
-### Test the new Service Dialog
-
-We want to see how the resulting Service Catalog Item looks like.
-
-1. Navigate to ***Services*** -> ***Catalogs***
-
-    ![navigate to service catalogs](img/navigate-to-service-catalog.png)
-
-1. Make sure you are on the "Service Catalogs" tab in the accordion on the left
-
-1. Order the "Provision Virtual Machine" Service Catalog Item
-
-    ![provision virtual machine](img/provision-vm-catalog-item.png)
-
-1. Note the Service Dialog has changed compared to before. You should notice a few fields are gone and the vCenter is now a drop down list. "vCenter" should already be selected for you.
-
-    ![new provision virtual machine dialog](img/order-new-virtual-machine-dialog.png)
-
-1. If you want, you can go ahead and submit the order
+    -->
 
 ## Policies and Ansible
 
-In this lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. This is not meant to be a real world example, but instead, a way to demonstrate the power of Ansible in combination with the CloudForms control policies. 
+In section of the lab we will cover how to create an action in CoudForms that executes an Ansible Playbook. This is not meant to be a real world example, but instead, a way to demonstrate the power of Ansible in combination with the CloudForms control policies.
 
 ### Creating the Service
 
@@ -818,7 +659,7 @@ Control Policies drive Control Actions. Ansible Playbooks can now be executed as
 
 First we need to create a Catalog to store the service in, do this by clicking Services/Catalogs and create new by clicking Configuration button and selecting Add New Catalog.
 
-### Create a Service Catalog Item for the Playbook
+### Create a Service Catalog Item for the policy Playbook
 
 1. Navigate to ***Services*** -> ***Catalogs***
 
