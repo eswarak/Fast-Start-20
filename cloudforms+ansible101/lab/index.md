@@ -71,7 +71,7 @@ The lab is comprised of a number of systems:
 
         URL: https://cf-<GUID>.rhpds.opentlc.com
 
-        User: admin / password: r3dh4t1!
+        User: admin / password: smartvm
 
 - Red Hat Enterprise Virtualization Manager
 
