@@ -112,6 +112,7 @@ As we explained before, your lab is built out of
 1. The first step is to initialize CloudForms. You need to ssh into the CloudForms appliance
 
         ssh root@cf-<GUID>.rhpds.opentlc.com
+	username root password smartvm
 
 2. Then you need to access to the launch the `appliance_console` command that will bring you to the summary page of the appliance
 
