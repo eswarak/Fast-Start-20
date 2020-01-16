@@ -3,39 +3,39 @@
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 - [Lab Introduction](#lab-introduction)
-	- [Introduction to CloudForms](#introduction-to-cloudforms)
-	- [Access the lab environment](#access-the-lab-environment)
-	- [Setting up the environment](#setting-up-the-environment)
-		- [Environment architecture](#environment-architecture)
-		- [Set up CloudForms](#set-up-cloudforms)
-		- [Add the VMware Provider](#add-the-vmware-provider)
-	- [CloudForms with Ansible](#cloudforms-with-ansible)
-		- [Introduction to Ansible](#introduction-to-ansible)
-		- [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
-		- [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
-		- [Add vCenter credentials](#add-vcenter-credentials)
-		- [Verify repository sync](#verify-repository-sync)
-		- [Install pyvmomi](#install-pyvmomi)
-		- [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
-		- [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
-		- [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
-		- [Order the "create user" Service Catalog Item](#order-the-create-user-service-catalog-item)
-		- [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
-		- [Verify Playbook results](#verify-playbook-results)
-		- [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
-		- [Order the Virtual Machine Provisioning Service Catalog Item](#order-the-virtual-machine-provisioning-service-catalog-item)
-		- [Monitor VM provisioning Playbook execution](#monitor-vm-provisioning-playbook-execution)
-	- [Policies and Ansible](#policies-and-ansible)
-		- [Creating the Service](#creating-the-service)
-		- [Create a Service Catalog Item for the policy Playbook](#create-a-service-catalog-item-for-the-policy-playbook)
-		- [Creating Control Action](#creating-control-action)
-		- [Create VM Control Policy](#create-vm-control-policy)
-		- [Setting Event Assignment](#setting-event-assignment)
-		- [Setting Control Action on Event](#setting-control-action-on-event)
-		- [Creating and Assigning Policy Profile](#creating-and-assigning-policy-profile)
-		- [Assign the policy profile](#assign-the-policy-profile)
-		- [Testing the Policy Profile](#testing-the-policy-profile)
-	- [Even more](#even-more)
+  - [Introduction to CloudForms](#introduction-to-cloudforms)
+  - [Access the lab environment](#access-the-lab-environment)
+  - [Setting up the environment](#setting-up-the-environment)
+    - [Environment architecture](#environment-architecture)
+    - [Set up CloudForms](#set-up-cloudforms)
+    - [Add the VMware Provider](#add-the-vmware-provider)
+  - [CloudForms with Ansible](#cloudforms-with-ansible)
+    - [Introduction to Ansible](#introduction-to-ansible)
+    - [Make sure embedded Ansible role is enabled and running](#make-sure-embedded-ansible-role-is-enabled-and-running)
+    - [Add a Git repository of Ansible Playbooks](#add-a-git-repository-of-ansible-playbooks)
+    - [Add vCenter credentials](#add-vcenter-credentials)
+    - [Verify repository sync](#verify-repository-sync)
+    - [Install pyvmomi](#install-pyvmomi)
+    - [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
+    - [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
+    - [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
+    - [Order the &quot;create user&quot; Service Catalog Item](#order-the-quotcreate-userquot-service-catalog-item)
+    - [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
+    - [Verify Playbook results](#verify-playbook-results)
+    - [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
+    - [Order the Virtual Machine Provisioning Service Catalog Item](#order-the-virtual-machine-provisioning-service-catalog-item)
+    - [Monitor VM provisioning Playbook execution](#monitor-vm-provisioning-playbook-execution)
+  - [Policies and Ansible](#policies-and-ansible)
+    - [Creating the Service](#creating-the-service)
+    - [Create a Service Catalog Item for the policy Playbook](#create-a-service-catalog-item-for-the-policy-playbook)
+    - [Creating Control Action](#creating-control-action)
+    - [Create VM Control Policy](#create-vm-control-policy)
+    - [Setting Event Assignment](#setting-event-assignment)
+    - [Setting Control Action on Event](#setting-control-action-on-event)
+    - [Creating and Assigning Policy Profile](#creating-and-assigning-policy-profile)
+    - [Assign the policy profile](#assign-the-policy-profile)
+    - [Testing the Policy Profile](#testing-the-policy-profile)
+  - [Even more](#even-more)
 
 <!-- /TOC -->
 
@@ -326,6 +326,8 @@ To be able to run Ansible Playbooks, they have to become available in CloudForms
 ### Add vCenter credentials
 
 For one of the following labs, the Playbook needs to be able to log into the vCenter provider. For this to work, we need to store the necessary credentials.
+
+***Note*** If you have issues, please, logout and log back in to Add the vCenter credentials
 
 1. Navigate to ***Automation*** -> ***Ansible*** -> ***Credentials***
 
@@ -723,11 +725,11 @@ First we need to create a Catalog to store the service in, do this by clicking S
 
     ***Display in Catalog:*** No (uncheck the box)
 
-    ***Catalog:*** Ansible
+    ***Catalog:*** MyCompany/Ansible
 
     ***Repository:*** Github
 
-    ***Playbook:*** vmware_reconfigure_vm.yml
+    ***Playbook:*** playbooks/vmware/vmware_reconfigure_vm.yml
 
     ***Machine Credentials:*** CFME Default Credentials
 
@@ -824,7 +826,7 @@ First we need to create a Catalog to store the service in, do this by clicking S
 
 ### Setting Control Action on Event
 
-1. Click on the Event that is now save to the policy
+1. Click on the Event that is now saved to the policy
 
     ![event](img/event.png)
 
