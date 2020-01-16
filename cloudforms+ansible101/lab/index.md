@@ -19,7 +19,7 @@
     - [Build a Service Catalog to create and delete users](#build-a-service-catalog-to-create-and-delete-users)
     - [Create a Service Catalog for Ansible Playbooks](#create-a-service-catalog-for-ansible-playbooks)
     - [Create a Service Catalog Item for the Playbook](#create-a-service-catalog-item-for-the-playbook)
-    - [Order the &quot;create user&quot; Service Catalog Item](#order-the-quotcreate-userquot-service-catalog-item)
+    - [Order the "create user" Service Catalog Item](#order-the-%22create-user%22-service-catalog-item)
     - [Monitor create user Playbook execution](#monitor-create-user-playbook-execution)
     - [Verify Playbook results](#verify-playbook-results)
     - [Build a Service Catalog to deploy Virtual Machines](#build-a-service-catalog-to-deploy-virtual-machines)
@@ -919,6 +919,8 @@ To see the results in real time, it's advised during testing to open the policy.
 1. Click on the VM cfme058 and verify that now it has 1GB of RAM and 1 CPU
 
     ![verify](img/verify.png)
+
+***Note*** The reason because you get 1GB and NOT 3GB as we set up is because the policy has run and the policy specifies that all VMs under the policy will have 1 CPU and 1 GB of RAM.
 
 ## Even more
 
