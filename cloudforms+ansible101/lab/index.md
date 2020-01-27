@@ -65,6 +65,8 @@ Click on the "EMEA RHTE CF Lab" and click on ***Order*** to start deployment.
 You will receive an email with the list of all virtual machines which have been deployed as part of the lab.
 -->
 
+This is for information only, please, go to the [Set up CloudForms](#set-up-cloudforms) section
+
 The lab is comprised of a number of systems:
 
 - Red Hat CloudForms Management Engine
