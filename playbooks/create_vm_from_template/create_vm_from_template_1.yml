@@ -21,7 +21,7 @@
         folder: "/{{ datacenter }}/vm/webb-cloudforms"
         datastore: "dc01-ds01"
         state: poweredon
-        wait_for_ip_address: yes
+        wait_for_ip_address: no
       delegate_to: localhost
  
     
