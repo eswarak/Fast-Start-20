@@ -1,0 +1,20 @@
+---
+- name: Clone VM
+  hosts: localhost 
+  gather_facts: false
+  tasks: 
+  - name: Clone VM from template
+    local_action:
+      module: vmware_guest
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      validate_certs: no      
+      folder: "{{ folder }}"
+      template: "{{ vmtemplate }}"
+      name: "{{ item }}"
+      cluster: "{{ vmcluster }}"
+      datacenter: "{{ datacenter }}"
+      state: poweredon
+      customization_spec: "{{ customization_spec }}"
+    
