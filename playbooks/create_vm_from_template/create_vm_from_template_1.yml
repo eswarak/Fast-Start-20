@@ -7,6 +7,7 @@
     vcenter_pass: Termin8t3r!!
     datacenter: "dc01"
     cluster: "cluster01"
+    
   tasks:
     - name: Clone the template
       vmware_guest:
@@ -15,7 +16,7 @@
         password: "{{ vcenter_pass }}"
         template: "centos7-template"
         validate_certs: False
-        name: "automagic"
+        name: "{{ vmname }}"
         datacenter: "{{ datacenter }}"
         cluster: "{{ cluster }}"
         folder: "/{{ datacenter }}/vm/webb-cloudforms"
