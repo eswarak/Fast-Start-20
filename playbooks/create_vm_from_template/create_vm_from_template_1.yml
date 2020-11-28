@@ -13,7 +13,7 @@
         hostname: "{{ vcenter_server }}"
         username: "{{ vcenter_user }}"
         password: "{{ vcenter_pass }}"
-        template: "centos7-cf-template"
+        template: "centos7-template"
         validate_certs: False
         name: "automagic"
         datacenter: "{{ datacenter }}"
@@ -21,7 +21,7 @@
         folder: "/{{ datacenter }}/vm/webb-cloudforms"
         datastore: "dc01-ds01"
         state: poweredon
-        wait_for_ip_address: no
+        wait_for_ip_address: yes
       delegate_to: localhost
  
     
