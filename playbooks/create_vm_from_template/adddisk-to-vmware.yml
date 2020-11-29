@@ -52,11 +52,14 @@
 
   - debug: var=list.stdout_lines
 
-  - name: Resize the disk 
-    command: "pvcreate /deb/sdb; vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r"
-    register: result
+  - name: pvcreate
+    command: "pvcreate /deb/sdb"
+  
+  - name: vgextend
+    command: "vgextend centos /dev/sdb"
 
-  - debug: var=result.stdout_lines
+  - name: lvextend
+    command: "lvextend -l +100%FREE /dev/centos/root -r"
 
       
     
