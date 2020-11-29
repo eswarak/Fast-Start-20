@@ -11,6 +11,7 @@
     datacenter: "dc01"
     cluster: "cluster01"
     datastore: "dc01-ds01"
+    ansible_ssh_pass: Passw0rd
 
   tasks:
   - name: get VM info
@@ -140,3 +141,13 @@
           scsi_type: 'paravirtual'
     delegate_to: localhost
     register: add_disk
+
+  - name: Resize the disk
+    shell: /usr/sbin/pvcreate /deb/sdb; /usr/sbin/vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r
+    register: result
+
+  - debug:
+    msg: New disk space {{result.stdout_lines}}
+
+      
+    
