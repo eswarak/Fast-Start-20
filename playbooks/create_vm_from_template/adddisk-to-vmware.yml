@@ -20,7 +20,7 @@
       password: "{{ vcenter_password }}"
       validate_certs: False
       datacenter: "{{ vcenter_host }}"
-      name: "{{ target_host }}"
+      name: "{{ vmname }}"
     delegate_to: localhost
     register: vm_disk_info
     
