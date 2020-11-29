@@ -11,7 +11,7 @@
     datacenter: "dc01"
     cluster: "cluster01"
     datastore: "dc01-ds01"
-    ansible_ssh_pass: Passw0rd
+    ansible_ssh_pass: password
     become_user: root
 
   tasks:
