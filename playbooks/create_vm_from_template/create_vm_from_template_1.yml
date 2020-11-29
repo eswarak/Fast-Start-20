@@ -14,7 +14,7 @@
         hostname: "{{ vcenter_server }}"
         username: "{{ vcenter_user }}"
         password: "{{ vcenter_pass }}"
-        template: "centos7-template"
+        template: "centos7template"
         validate_certs: False
         name: "{{ vmname }}"
         datacenter: "{{ datacenter }}"
