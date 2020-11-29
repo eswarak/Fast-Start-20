@@ -64,5 +64,5 @@
 #    when: file_path.stat.exists == true
 
   - name: execute the script
-    command: "pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r"
+    command: pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r
   
