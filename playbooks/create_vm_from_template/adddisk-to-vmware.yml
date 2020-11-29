@@ -1,7 +1,7 @@
 ---
 
 - name: create and add new disk(s) to vmware vm
-  hosts: "{{ vmname }}"
+  hosts: *
   strategy: debug
   gather_facts: yes
   vars:
@@ -46,8 +46,11 @@
     delegate_to: localhost
     register: add_disk
 
-#  - name: List the files
-#    set_fact: remote_file_path=/tmp/resize.sh
+  - name: List the files
+    command: "ls -la; hostname"
+    register: results
+
+  - debug: var=results.stdout
 
 #  - name: Create the file
 #    file: path="{{ remote_file_path }}" state=touch mode=755
