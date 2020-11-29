@@ -1,7 +1,7 @@
 ---
 
 - name: create and add new disk(s) to vmware vm
-  hosts: *
+  hosts: localhost
   vars:
     vcentre: vcsa67.rtp.raleigh.ibm.com
     username: "administrator@vsphere.local"
@@ -10,62 +10,62 @@
     cluster: "cluster01"
     datastore: "dc01-ds01"
 
-- tasks:
-  - name: check if VM exists
-    vmware_guest_facts:
-      hostname: "{{ vcentre }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
-      # only required for self signed certs
-      validate_certs: no
-      datacenter: "{{ dc_name }}" 
-      name: "{{ vmname }}"
-    register: vm_facts
+  tasks:
+    - name: check if VM exists
+      vmware_guest_facts:
+        hostname: "{{ vcentre }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        # only required for self signed certs
+        validate_certs: no
+        datacenter: "{{ dc_name }}" 
+        name: "{{ vmname }}"
+      register: vm_facts
 
-  - name: get auth session token for API
-    uri:
-      url: "https://{{ vcentre }}/rest/com/vmware/cis/session"
-      method: POST
-      user: "{{ username }}"
-      password: "{{ password }}"
-      return_content: yes
-      validate_certs: no
-      force_basic_auth: yes
-    register: auth_json
+    - name: get auth session token for API
+      uri:
+        url: "https://{{ vcentre }}/rest/com/vmware/cis/session"
+        method: POST
+        user: "{{ username }}"
+        password: "{{ password }}"
+        return_content: yes
+        validate_certs: no
+        force_basic_auth: yes
+      register: auth_json
 
-  - name: create fact with session id
-    set_fact:
-      session_id: "{{ auth_json.cookies['vmware-api-session-id'] }}"
+    - name: create fact with session id
+      set_fact:
+        session_id: "{{ auth_json.cookies['vmware-api-session-id'] }}"
 
-  - name: get VM id
-    uri:
-      url: "https://{{ vcentre }}/rest/vcenter/vm?filter.names.1={{ vmname }}"
-      method: GET
-     headers:
-        vmware-api-session-id: "{{ session_id }}"
-      return_content: yes
-      validate_certs: no
-    register: vm_json
+    - name: get VM id
+      uri:
+        url: "https://{{ vcentre }}/rest/vcenter/vm?filter.names.1={{ vmname }}"
+        method: GET
+        headers:
+          vmware-api-session-id: "{{ session_id }}"
+        return_content: yes
+        validate_certs: no
+      register: vm_json
 
-  - name: set vm_id fact
-    set_fact:
-     vm_id: "{{ vm_json.json.value[0]['vm'] }}"
+    - name: set vm_id fact
+      set_fact:
+        vm_id: "{{ vm_json.json.value[0]['vm'] }}"
 
-  - name: add disk to VM
-    uri:
-      url: "https://{{ vcentre }}/rest/vcenter/vm/{{ vm_id }}/hardware/disk"
-      method: POST
-      headers:
-        vmware-api-session-id: "{{ session_id }}"
-      return_content: yes
-      validate_certs: no
-      body:
-        spec:
-          type: "SCSI"
-          scsi:
-            bus: 0
-          new_vmdk:
-            name: "{{ disk.0 }}"
-            capacity: "{{ disk.1 * 1073741824 }}"
-    register: add_disk_json
+    - name: add disk to VM
+      uri:
+        url: "https://{{ vcentre }}/rest/vcenter/vm/{{ vm_id }}/hardware/disk"
+        method: POST
+        headers:
+          vmware-api-session-id: "{{ session_id }}"
+        return_content: yes
+        validate_certs: no
+        body:
+          spec:
+            type: "SCSI"
+            scsi:
+              bus: 0
+            new_vmdk:
+              name: "{{ disk.0 }}"
+              capacity: "{{ disk.1 * 1073741824 }}"
+      register: add_disk_json
 
