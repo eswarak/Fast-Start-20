@@ -52,19 +52,16 @@
 
   - debug: var=list.stdout_lines
 
-  - name: pvcreate
-    command: "pvcreate /deb/sdb"
-    args:
-      executable: /bin/bash
-  
-  - name: vgextend
-    command: "vgextend centos /dev/sdb"
-    args:
-      executable: /bin/bash
+  - name: vg
+    lvg:
+      vg: centos
+      pvs: /dev/sdb
 
-  - name: lvextend
-    command: "lvextend -l +100%FREE /dev/centos/root -r"
-    args:
-      executable: /bin/bash
+  - name: lvol
+    lvol:
+      vg: centos
+      lv: root
+      size: +100FREE
+      opts: -r
       
     
