@@ -46,23 +46,23 @@
     delegate_to: localhost
     register: add_disk
 
-  - name: List the files
-    set_fact: remote_file_path=/tmp/resize.sh
+#  - name: List the files
+#    set_fact: remote_file_path=/tmp/resize.sh
 
-  - name: Create the file
-    file: path="{{ remote_file_path }}" state=touch mode=755
+#  - name: Create the file
+#    file: path="{{ remote_file_path }}" state=touch mode=755
 
-  - name: Check remote file path
-    stat: path="{{remote_file_path}}"
-    register: file_path
+#  - name: Check remote file path
+#    stat: path="{{remote_file_path}}"
+#    register: file_path
 
-  - name: file content
-    set_fact: file_content="pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r"
+#  - name: file content
+#    set_fact: file_content="pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r"
 
-  - name: copy content
-    copy: content="{{file_content}}" dest="{{remote_file_path}}"
-    when: file_path.stat.exists == true
+#  - name: copy content
+#    copy: content="{{file_content}}" dest="{{remote_file_path}}"
+#    when: file_path.stat.exists == true
 
   - name: execute the script
-    script: sh /tmp/resize.sh
+    script: sh "pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r"
   
