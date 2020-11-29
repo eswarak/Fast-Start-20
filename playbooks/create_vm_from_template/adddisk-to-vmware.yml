@@ -15,11 +15,11 @@
   tasks:
   - name: get VM info
     vmware_guest_disk_facts:
-      hostname: "{{ vcenter_host }}"
-      username: "{{ vcenter_username }}"
-      password: "{{ vcenter_password }}"
+      hostname: "{{ vcenter }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
       validate_certs: False
-      datacenter: "{{ vcenter_host }}"
+      datacenter: "{{ dc_name }}"
       name: "{{ vmname }}"
     delegate_to: localhost
     register: vm_disk_info
