@@ -143,7 +143,7 @@
     register: add_disk
 
   - name: Resize the disk
-    shell: /usr/sbin/pvcreate /deb/sdb; /usr/sbin/vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r
+    shell: /sbin/pvcreate /deb/sdb; /sbin/vgextend centos /deb/sdb; /sbin/lvextend -l +100% FREE /dev/centos/root -r
     register: result
 
   - debug: var=result.stdout_lines
