@@ -12,6 +12,7 @@
     cluster: "cluster01"
     datastore: "dc01-ds01"
     ansible_ssh_pass: Passw0rd
+    become_user: root
 
   tasks:
   - name: get VM info
