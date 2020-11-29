@@ -24,5 +24,117 @@
     delegate_to: localhost
     register: vm_disk_info
     
-  - debug: 
-      msg: vm_disk_info
+  - name: Set empty list to store varialbe
+    set_fact:
+      all_scsi_number_list: []  # A list to store all scsi device number
+      scsi_0: []  # A list to store scsi 0's device for counting the quantity
+      scsi_1: []  # A list to store scsi 1's device for counting the quantity
+      scsi_2: []  # A list to store scsi 2's device for counting the quantity
+      scsi_3: []  # A list to store scsi 3's device for counting the quantity
+      all_unit_number_list: []  # A list to store the device number from scsi controller   
+
+  - name: Set variable of datastore
+    set_fact:
+      host_datastore: "{{ vm_disk_info.guest_disk_facts['0'].backing_datastore }}"
+
+  - name: Store scsi_number into all_scsi_number_list
+    set_fact:
+      all_scsi_number_list: "{{ all_scsi_number_list + [vm_disk_info.guest_disk_facts[item].controller_key] }}"
+    loop: "{{ vm_disk_info.guest_disk_facts.keys() }}"
+
+  - name: Find out scsi_controller 0 and store into scsi_0
+    set_fact:
+      scsi_0 : "{{ scsi_0 + [item] }}"
+    loop: "{{ all_scsi_number_list }}"
+    when: item == 1000
+
+  - name: Find out the scsi_controller 1 and store into scsi_1
+    set_fact:
+      scsi_1 : "{{ scsi_1 + [item] }}"
+    loop: "{{ all_scsi_number_list }}"
+    when: item == 1001
+
+  - name: Find out the scsi_controller 2 and store into scsi_2
+    set_fact:
+      scsi_2 : "{{ scsi_2 + [item] }}"
+    loop: "{{ all_scsi_number_list }}"
+    when: item == 1002
+
+  - name: Find out the scsi_controller 3 and store into scsi_3
+    set_fact:
+      scsi_3 : "{{ scsi_3 + [item] }}"
+    loop: "{{ all_scsi_number_list }}"
+    when: item == 1003
+
+  - name: Calcualte the quantity of scsi_*
+    set_fact:
+      scsi_0_number: "{{ scsi_0 | length }}"
+      scsi_1_number: "{{ scsi_1 | length }}"
+      scsi_2_number: "{{ scsi_2 | length }}"
+      scsi_3_number: "{{ scsi_3 | length }}"
+
+  - name: Verify the scsi controller's number because snapshot will also cost the device so less than 7 to prevent
+    set_fact:
+      scsi_number: "{{ item.src }}"
+    loop:
+      - { src: "0", when: "{{ (scsi_0_number <= '6' and scsi_0_number != '0') or (scsi_0_number == '0') }}" }
+      - { src: "1", when: "{{ (scsi_1_number <= '6' and scsi_1_number != '0') or (scsi_1_number == '0') }}" }
+      - { src: "2", when: "{{ (scsi_2_number <= '6' and scsi_2_number != '0') or (scsi_2_number == '0') }}" }
+      - { src: "3", when: "{{ (scsi_3_number <= '6' and scsi_3_number != '0') or (scsi_3_number == '0') }}" }
+    when: item.when
+
+  - name: Show scsi_number which we get
+    debug:
+      msg: "{{ scsi_number }}"
+
+  - name: Change the scsi_number we obtained to 4 digit number
+    set_fact:
+      scsi_digit_number: "{{ item.src | int }}"
+    loop:
+      - { src: "1000", when: "{{ scsi_number == '0' }}" }
+      - { src: "1001", when: "{{ scsi_number == '1' }}" }
+      - { src: "1002", when: "{{ scsi_number == '2' }}" }
+      - { src: "1003", when: "{{ scsi_number == '3' }}" }
+    when: item.when
+
+  - name: Show scsi_digit_number which we get
+    debug:
+      msg: "{{ scsi_digit_number }}"
+
+  - name: Check the number of devices from the scci_number we obtained
+    set_fact:
+      all_unit_number_list: "{{ all_unit_number_list + [vm_disk_info.guest_disk_facts[item].unit_number] }}"
+    loop: "{{ vm_disk_info.guest_disk_facts.keys() }}"
+    when: vm_disk_info.guest_disk_facts[item].controller_key == scsi_digit_number | int
+
+  - name: Show all_unit_number_list which we get
+    debug:
+      msg: "{{ all_unit_number_list | length | type_debug }}"
+
+  - name: Find the max number in all_unit_number_list then plus 1 to add new disk
+    set_fact:
+      disk_number: "{{ all_unit_number_list | max + 1 }}"
+    ignore_errors: yes
+
+  - name: If we have to add new scsi controller then the all_unit_number_list will be empty list, so we need to prevent it failed
+    set_fact:
+      disk_number: 0
+    when: all_unit_number_list | length == 0
+
+  - name: add disk
+    vmware_guest_disk:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      datacenter: "{{ datacenter }}"
+      name: "{{ vmname }}"
+      disk:
+        - size_gb: 2
+          type: thin
+          state: present
+          datastore: "{{ host_datastore }}"
+          # autoselect_datastore: True
+          scsi_controller: "{{ scsi_number | int }}"
+          unit_number: "{{ disk_number | int }}"
+          scsi_type: 'paravirtual'
