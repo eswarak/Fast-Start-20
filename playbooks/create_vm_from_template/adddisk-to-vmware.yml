@@ -131,7 +131,7 @@
       datacenter: "{{ datacenter }}"
       name: "{{ vmname }}"
       disk:
-        - size_gb: {{ disksize | int }}
+        - size_gb: {{ disksize }}
           type: thin
           state: present
           datastore: "{{ datastore }}"
