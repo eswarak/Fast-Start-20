@@ -2,13 +2,13 @@
 
 - name: create and add new disk(s) to vmware vm
   hosts: *
-    vars:
-      vcentre: vcsa67.rtp.raleigh.ibm.com
-      username: "administrator@vsphere.local"
-      password: Termin8t3r!!
-      dc_name: "dc01"
-      cluster: "cluster01"
-      datastore: "dc01-ds01"
+  vars:
+    vcentre: vcsa67.rtp.raleigh.ibm.com
+    username: "administrator@vsphere.local"
+    password: Termin8t3r!!
+    dc_name: "dc01"
+    cluster: "cluster01"
+    datastore: "dc01-ds01"
 
 - tasks:
   - name: check if VM exists
