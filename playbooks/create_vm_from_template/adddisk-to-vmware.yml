@@ -1,7 +1,7 @@
 ---
 
 - name: create and add new disk(s) to vmware vm
-  hosts: localhost
+  hosts: 192.168.100.63
   strategy: debug
   gather_facts: yes
   vars:
