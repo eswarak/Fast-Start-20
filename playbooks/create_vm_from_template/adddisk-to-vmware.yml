@@ -1,0 +1,28 @@
+---
+
+- name: create and add new disk(s) to vmware vm
+  hosts: localhost
+  strategy: debug
+  gather_facts: yes
+  vars:
+    vcentre: vcsa67.rtp.raleigh.ibm.com
+    username: "administrator@vsphere.local"
+    password: Termin8t3r!!
+    dc_name: "dc01"
+    cluster: "cluster01"
+    datastore: "dc01-ds01"
+
+  tasks:
+  - name: get VM info
+    vmware_guest_disk_facts:
+      hostname: "{{ vcenter_host }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      validate_certs: False
+      datacenter: "{{ vcenter_host }}"
+      name: "{{ target_host }}"
+    delegate_to: localhost
+    register: vm_disk_info
+    
+  - debug: 
+      var: vm_disk_info.output
