@@ -5,24 +5,24 @@
   strategy: debug
   gather_facts: yes
   vars:
-    vcentre: vcsa67.rtp.raleigh.ibm.com
-    username: "administrator@vsphere.local"
-    password: Termin8t3r!!
-    dc_name: "dc01"
+    vcenter_server: vcsa67.rtp.raleigh.ibm.com
+    vcenter_user: "administrator@vsphere.local"
+    vcenter_pass: Termin8t3r!!
+    datacenter: "dc01"
     cluster: "cluster01"
     datastore: "dc01-ds01"
 
   tasks:
   - name: get VM info
     vmware_guest_disk_facts:
-      hostname: "{{ vcenter }}"
-      username: "{{ username }}"
-      password: "{{ password }}"
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
       validate_certs: False
-      datacenter: "{{ dc_name }}"
+      datacenter: "{{ datacenter }}"
       name: "{{ vmname }}"
     delegate_to: localhost
     register: vm_disk_info
     
   - debug: 
-      var: vm_disk_info.output
+      msg: vm_disk_info
