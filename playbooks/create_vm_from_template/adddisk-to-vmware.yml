@@ -24,14 +24,14 @@
     delegate_to: localhost
     register: vm_disk_info
     
-  - name: Set empty list to store varialbe
-    set_fact:
-      all_scsi_number_list: []  # A list to store all scsi device number
-      scsi_0: []  # A list to store scsi 0's device for counting the quantity
-      scsi_1: []  # A list to store scsi 1's device for counting the quantity
-      scsi_2: []  # A list to store scsi 2's device for counting the quantity
-      scsi_3: []  # A list to store scsi 3's device for counting the quantity
-      all_unit_number_list: []  # A list to store the device number from scsi controller   
+#  - name: Set empty list to store varialbe
+#    set_fact:
+#      all_scsi_number_list: []  # A list to store all scsi device number
+#      scsi_0: []  # A list to store scsi 0's device for counting the quantity
+#      scsi_1: []  # A list to store scsi 1's device for counting the quantity
+#      scsi_2: []  # A list to store scsi 2's device for counting the quantity
+#      scsi_3: []  # A list to store scsi 3's device for counting the quantity
+#      all_unit_number_list: []  # A list to store the device number from scsi controller   
 
 #  - name: Set variable of datastore
 #   set_fact:
