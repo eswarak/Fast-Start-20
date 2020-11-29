@@ -47,10 +47,19 @@
     register: add_disk
 
   - name: List the files
-    command: "ls -la; hostname"
+    command: "hostname -f"
+    ignore_errors: yes
     register: results
+    
 
   - debug: var=results.stdout
+
+  - name: List the files
+    shell: "ls -la"
+    ignore_errors: yes
+    register: results1
+
+  - debug: var=results1.stdout
 
 #  - name: Create the file
 #    file: path="{{ remote_file_path }}" state=touch mode=755
