@@ -54,12 +54,17 @@
 
   - name: pvcreate
     command: "pvcreate /deb/sdb"
+    args:
+      executable: /bin/bash
   
   - name: vgextend
     command: "vgextend centos /dev/sdb"
+    args:
+      executable: /bin/bash
 
   - name: lvextend
     command: "lvextend -l +100%FREE /dev/centos/root -r"
-
+    args:
+      executable: /bin/bash
       
     
