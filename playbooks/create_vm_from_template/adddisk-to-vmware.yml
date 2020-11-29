@@ -137,13 +137,14 @@
           datastore: "{{ datastore }}"
           # autoselect_datastore: True
           scsi_controller: 1
-          unit_number: 1
+          unit_number: 2
           scsi_type: 'paravirtual'
     delegate_to: localhost
     register: add_disk
 
   - name: Resize the disk
-    shell: /sbin/pvcreate /deb/sdb; /sbin/vgextend centos /deb/sdb; /sbin/lvextend -l +100% FREE /dev/centos/root -r
+    shell: 
+      cmd: /sbin/pvcreate /deb/sdb; /sbin/vgextend centos /deb/sdb; /sbin/lvextend -l +100% FREE /dev/centos/root -r
     register: result
 
   - debug: var=result.stdout_lines
