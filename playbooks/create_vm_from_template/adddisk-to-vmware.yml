@@ -146,6 +146,7 @@
     shell: /usr/sbin/pvcreate /deb/sdb; /usr/sbin/vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r
     register: result
 
+  - debug: var=result.stdout_lines
 
       
     
