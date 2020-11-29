@@ -50,10 +50,10 @@
     command: "ls -la /"
     register: list
 
-  - debug: var=result.stdout_lines
+  - debug: var=list.stdout_lines
 
   - name: Resize the disk 
-    cmd: "pvcreate /deb/sdb; vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r"
+    command: "pvcreate /deb/sdb; vgextend centos /deb/sdb; lvextend -l +100% FREE /dev/centos/root -r"
     register: result
 
   - debug: var=result.stdout_lines
