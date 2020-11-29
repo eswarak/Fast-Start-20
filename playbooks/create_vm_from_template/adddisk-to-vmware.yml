@@ -133,8 +133,13 @@
         - size_gb: 2
           type: thin
           state: present
-          datastore: "{{ host_datastore }}"
+          datastore: "{{ datastore }}"
           # autoselect_datastore: True
           scsi_controller: 1
           unit_number: 1
           scsi_type: 'paravirtual'
+    delegate_to: localhost
+    register: add_disk
+
+  - debug:
+      msg: add_disk.output
