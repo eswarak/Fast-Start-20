@@ -1,7 +1,7 @@
 ---
 
 - name: create and add new disk(s) to vmware vm
-  hosts: *
+  hosts: "{{ vmname }}"
   strategy: debug
   gather_facts: yes
   vars:
