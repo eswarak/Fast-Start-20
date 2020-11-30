@@ -41,7 +41,7 @@
           datastore: "{{ datastore }}"
           # autoselect_datastore: True
           scsi_controller: 1
-          unit_number: 2
+          unit_number: 1
           scsi_type: 'paravirtual'
     delegate_to: localhost
     register: add_disk
