@@ -1,7 +1,7 @@
 ---
 
 - name: create and add new disk(s) to vmware vm
-  hosts: 192.168.100.63
+  hosts: localhost
   strategy: debug
   gather_facts: yes
   vars:
@@ -45,36 +45,3 @@
           scsi_type: 'paravirtual'
     delegate_to: localhost
     register: add_disk
-
-  - name: List the files
-    command: "hostname -f"
-    ignore_errors: yes
-    register: results
-    
-
-  - debug: var=results.stdout
-
-  - name: List the files
-    shell: "ls -la"
-    ignore_errors: yes
-    register: results1
-
-  - debug: var=results1.stdout
-
-#  - name: Create the file
-#    file: path="{{ remote_file_path }}" state=touch mode=755
-
-#  - name: Check remote file path
-#    stat: path="{{remote_file_path}}"
-#    register: file_path
-
-#  - name: file content
-#    set_fact: file_content="pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r"
-
-#  - name: copy content
-#    copy: content="{{file_content}}" dest="{{remote_file_path}}"
-#    when: file_path.stat.exists == true
-
-  - name: execute the script
-    command: pvcreate /dev/sdb; vgextend centos /dev/sdb; lvextend -l +100%FREE /dev/centos/root -r
-  
